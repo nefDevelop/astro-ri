@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = await getCollection('blog');
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<Layout title="Tags" description="All tags">
+	<section class="mx-auto max-w-3xl px-4 py-12">
+		<h1 class="mb-2 text-3xl font-bold">Tags</h1>
+		<p class="mb-8 text-[var(--text-muted)]">Browse posts by tag.</p>
+
+		<div class="flex flex-wrap gap-3">
+			{
+				tags.map((tag) => {
+					const count = posts.filter((p) => p.data.tags.includes(tag)).length;
+					return (
+						<a
+							href={`/tags/${tag}/`}
+							class="inline-flex items-center gap-2 rounded-full bg-[var(--tertiary-90)] px-4 py-2 text-sm font-medium text-[var(--tertiary-10)] no-underline transition-colors hover:bg-[var(--tertiary-80)]"
+						>
+							{tag}
+							<span class="rounded-full bg-[var(--tertiary-80)] px-1.5 py-0.5 text-xs">{count}</span>
+						</a>
+					);
+				})
+			}
+		</div>
+	</section>
+</Layout>

@@ -1,0 +1,193 @@
+:root {
+    --hue: 165;
+    --primary: oklch(0.70 0.14 var(--hue));
+    --page-bg: oklch(0.95 0.01 var(--hue));
+    --card-bg: white;
+    --card-bg-transparent: rgba(255, 255, 255, 0.7);
+    --line-divider: rgba(0, 0, 0, 0.08);
+    --text-primary: oklch(0.25 0.02 var(--hue));
+    --text-secondary: oklch(0.5 0.03 var(--hue));
+    --btn-regular-bg: oklch(0.95 0.025 var(--hue));
+    --btn-plain-bg-hover: oklch(0.95 0.025 var(--hue));
+    --toolbar-bg: oklch(0.92 0.03 var(--hue));
+    --radius-large: 1rem;
+    --radius-navbar: 0.75rem;
+    --radius-lg: 0.5rem;
+    --radius-md: 0.375rem;
+    --navbar-glass-blur: 20px;
+    --page-width: 1200px;
+}
+
+:root.dark {
+    --primary: oklch(0.75 0.14 var(--hue));
+    --page-bg: oklch(0.16 0.014 var(--hue));
+    --card-bg: oklch(0.23 0.015 var(--hue));
+    --card-bg-transparent: rgba(23, 23, 23, 0.7);
+    --line-divider: rgba(255, 255, 255, 0.1);
+    --text-primary: oklch(0.85 0.02 var(--hue));
+    --text-secondary: oklch(0.65 0.02 var(--hue));
+    --btn-regular-bg: oklch(0.33 0.035 var(--hue));
+    --btn-plain-bg-hover: oklch(0.30 0.035 var(--hue));
+    --toolbar-bg: oklch(0.28 0.02 var(--hue));
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0; padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--page-bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    width: 100%;
+}
+
+/* Navbar principal */
+header#navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+}
+.nav-inner {
+    background: var(--card-bg);
+    border: 1px solid var(--line-divider);
+    border-top: none;
+    border-radius: 0 0 var(--radius-navbar) var(--radius-navbar);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    width: 95%; max-width: var(--page-width);
+    margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    height: 4rem; padding: 0 1.5rem;
+}
+
+.cms-container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    width: 95%;
+}
+
+/* Botones Globales */
+.cms-btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0 1.25rem;
+    height: 2.75rem;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+.cms-btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.cms-btn-primary:active { transform: scale(0.98); }
+.cms-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cms-btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--line-divider);
+    padding: 0 1.25rem;
+    height: 2.75rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+.cms-btn-ghost:hover { background: var(--btn-regular-bg); color: var(--text-primary); }
+
+.cms-btn-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-divider);
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1.25rem;
+}
+.cms-btn-icon:hover { border-color: var(--primary); color: var(--primary); background: var(--btn-regular-bg); }
+
+/* Editor Header: mismo ancho que el body pero contenido centrado */
+.cms-editor-header {
+    position: fixed; top: 4.5rem; left: 0; right: 0; z-index: 900;
+    width: 100%;
+}
+.cms-header-inner {
+    max-width: var(--page-width); margin: 0 auto; width: 95%;
+    display: flex; justify-content: space-between; align-items: center;
+    height: 3.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--line-divider);
+    border-radius: var(--radius-navbar);
+    padding: 0 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Layout Grid y Paneles */
+.cms-editor-content { padding: 9.5rem 0 3rem 0; max-width: var(--page-width); margin: 0 auto; width: 95%; }
+.cms-editor-layout-grid { display: grid; grid-template-columns: 400px 1fr; gap: 2rem; align-items: start; }
+.cms-editor-layout-grid.is-full-width { grid-template-columns: 1fr; }
+
+.cms-panel-card {
+    background: var(--card-bg); border: 1px solid var(--line-divider);
+    border-radius: var(--radius-large); padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 1.25rem;
+    overflow: hidden; /* Evita que el contenido se salga */
+}
+
+.cms-form-group { display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+.cms-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; }
+
+.cms-input, .cms-textarea {
+    background: var(--btn-regular-bg);
+    border: 1px solid var(--line-divider);
+    border-radius: var(--radius-lg);
+    padding: 0.6rem 0.85rem;
+    color: inherit;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+/* Editor Area */
+.cms-editor-container {
+    background: var(--card-bg); border: 1px solid var(--line-divider);
+    border-radius: var(--radius-large); overflow: hidden; display: flex; flex-direction: column; min-height: 700px;
+}
+.cms-main-textarea {
+    flex: 1; border: none; background: transparent; padding: 2rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 1rem; line-height: 1.7; color: inherit; resize: none; outline: none;
+}
+
+/* Preview Markdown */
+.cms-preview-container {
+    background: var(--card-bg); border: 1px solid var(--line-divider);
+    border-radius: var(--radius-large); padding: 3rem; min-height: 700px;
+}
+.markdown-content pre { background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: var(--radius-lg); overflow-x: auto; margin: 1.5rem 0; }
+.markdown-content code { color: var(--primary); background: var(--btn-regular-bg); padding: 0.2rem 0.4rem; border-radius: 4px; }
+
+/* Dashboard Toolbar fix */
+.cms-top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--card-bg); padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-large); border: 1px solid var(--line-divider);
+    margin-bottom: 2rem;
+}
+
+/* Utilidades adicionales */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.btn-plain { background: none; border: none; color: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+.scale-animation:active { transform: scale(0.95); }

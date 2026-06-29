@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Page not found" description="The page you're looking for doesn't exist.">
+	<section class="mx-auto flex max-w-lg flex-col items-center px-4 py-24 text-center">
+		<h1 class="text-8xl font-bold text-[var(--primary)]">404</h1>
+		<p class="mt-4 text-xl text-[var(--text-muted)]">Page not found</p>
+		<p class="mt-2 text-sm text-[var(--text-muted)]">The page you're looking for doesn't exist or has been moved.</p>
+		<a
+			href="/"
+			class="mt-8 inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-medium text-white no-underline transition-opacity hover:opacity-90"
+		>
+			&larr; Back to home
+		</a>
+	</section>
+</Layout>

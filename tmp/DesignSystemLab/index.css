@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+
+:root {
+	/* Variables dinámicas que controlaremos con JS */
+	--primary: #ac6605;
+	--secondary: #687797;
+	--tertiary: #4078c1;
+	--neutral: #8c7353;
+	--bento-bg: #f5e6d3;
+	--card-bg: #ffffff;
+	--text-main: #18181b;
+	--text-muted: #71717a;
+	--radius: 32px;
+	--radius-sm: calc(var(--radius) * 0.5); /* Ejemplo: 16px si --radius es 32px */
+	--radius-md: calc(var(--radius) * 0.75); /* Ejemplo: 24px si --radius es 32px */
+	--radius-lg: var(--radius); /* Ejemplo: 32px */
+	--radius-full: 9999px; /* Para formas de píldora */
+	--font-headline: 'Domine', serif;
+	--font-body: 'Manrope', sans-serif;
+	--font-label: 'Manrope', sans-serif;
+	--font-weight-headline: 800;
+	--letter-spacing: 0px;
+	--text-transform-headline: none;
+
+	/* Shades automáticos usando color-mix */
+	--primary-0: #000000;
+	--primary-10: color-mix(in srgb, var(--primary), black 80%);
+	--primary-20: color-mix(in srgb, var(--primary), black 60%);
+	--primary-30: color-mix(in srgb, var(--primary), black 40%);
+	--primary-40: color-mix(in srgb, var(--primary), black 20%);
+	--primary-50: var(--primary);
+	--primary-60: color-mix(in srgb, var(--primary), white 20%);
+	--primary-70: color-mix(in srgb, var(--primary), white 40%);
+	--primary-80: color-mix(in srgb, var(--primary), white 60%);
+	--primary-90: color-mix(in srgb, var(--primary), white 80%);
+	--primary-95: color-mix(in srgb, var(--primary), white 90%);
+	--primary-100: #ffffff;
+
+	--secondary-0: #000000;
+	--secondary-10: color-mix(in srgb, var(--secondary), black 80%);
+	--secondary-20: color-mix(in srgb, var(--secondary), black 60%);
+	--secondary-30: color-mix(in srgb, var(--secondary), black 40%);
+	--secondary-40: color-mix(in srgb, var(--secondary), black 20%);
+	--secondary-50: var(--secondary);
+	--secondary-60: color-mix(in srgb, var(--secondary), white 20%);
+	--secondary-70: color-mix(in srgb, var(--secondary), white 40%);
+	--secondary-80: color-mix(in srgb, var(--secondary), white 60%);
+	--secondary-90: color-mix(in srgb, var(--secondary), white 80%);
+	--secondary-95: color-mix(in srgb, var(--secondary), white 90%);
+	--secondary-100: #ffffff;
+
+	--tertiary-0: #000000;
+	--tertiary-10: color-mix(in srgb, var(--tertiary), black 80%);
+	--tertiary-20: color-mix(in srgb, var(--tertiary), black 60%);
+	--tertiary-30: color-mix(in srgb, var(--tertiary), black 40%);
+	--tertiary-40: color-mix(in srgb, var(--tertiary), black 20%);
+	--tertiary-50: var(--tertiary);
+	--tertiary-60: color-mix(in srgb, var(--tertiary), white 20%);
+	--tertiary-70: color-mix(in srgb, var(--tertiary), white 40%);
+	--tertiary-80: color-mix(in srgb, var(--tertiary), white 60%);
+	--tertiary-90: color-mix(in srgb, var(--tertiary), white 80%);
+	--tertiary-95: color-mix(in srgb, var(--tertiary), white 90%);
+	--tertiary-100: #ffffff;
+
+	--neutral-0: #000000;
+	--neutral-10: color-mix(in srgb, var(--neutral), black 80%);
+	--neutral-20: color-mix(in srgb, var(--neutral), black 60%);
+	--neutral-30: color-mix(in srgb, var(--neutral), black 40%);
+	--neutral-40: color-mix(in srgb, var(--neutral), black 20%);
+	--neutral-50: var(--neutral);
+	--neutral-60: color-mix(in srgb, var(--neutral), white 20%);
+	--neutral-70: color-mix(in srgb, var(--neutral), white 40%);
+	--neutral-80: color-mix(in srgb, var(--neutral), white 60%);
+	--neutral-90: color-mix(in srgb, var(--neutral), white 80%);
+	--neutral-95: color-mix(in srgb, var(--neutral), white 90%);
+	--neutral-100: #ffffff;
+}
+
+@layer base {
+	body {
+		/* Se eliminan min-h-screen y padding del body para evitar conflictos con el div principal de la app */
+		background-image: radial-gradient(var(--text-muted) 0.5px, transparent 0.5px);
+		background-size: 24px 24px;
+	}
+	input,
+	textarea,
+	select,
+	button {
+		font-family: inherit;
+	}
+}
+
+body {
+	font-family: var(--font-body);
+	-webkit-text-size-adjust: 100%; /* Previene el ajuste automático del tamaño del texto en móviles */
+	text-size-adjust: 100%; /* Versión estándar */
+}
+
+.font-serif {
+	font-family: var(--font-headline);
+	font-weight: var(--font-weight-headline);
+	letter-spacing: var(--letter-spacing);
+	text-transform: var(--text-transform-headline);
+}
+
+.font-sans {
+	font-family: var(--font-body);
+}
+
+.font-label {
+	font-family: var(--font-label);
+}
+
+.design-label {
+	@apply text-[9px] font-bold uppercase tracking-widest text-[var(--text-muted)];
+	/* Ya no hereda el espaciado dinámico de los títulos */
+}

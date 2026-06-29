@@ -1,0 +1,137 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import { footerConfig, profileConfig } from "@/config";
+import { url } from "@/utils/url-utils";
+import { Icon } from "astro-icon/components";
+import SiteStats from "@/components/widget/SiteStats.astro"; // Assuming this path is correct
+
+const currentYear = new Date().getFullYear();
+
+// 读取FooterConfig.html文件内容
+let customFooterHtml = "";
+if (footerConfig.enable) {
+	try {
+		const footerConfigPath = path.join(
+			process.cwd(),
+			"src",
+			"config",
+			"FooterConfig.html",
+		);
+		customFooterHtml = fs.readFileSync(footerConfigPath, "utf-8");
+		// 移除HTML注释
+		customFooterHtml = customFooterHtml.replace(/<!--[\s\S]*?-->/g, "").trim();
+	} catch (error) {
+		console.warn("FooterConfig.html文件读取失败:", error.message);
+	}
+}
+---
+
+
+<footer class="w-full mt-4 pointer-events-auto max-w-(--page-width) mx-auto px-0 md:px-4">
+	<div class="w-full mx-auto py-4 onload-animation px-2 md:px-4 relative">
+		<div class="text-center text-sm text-50">
+			<div class="mb-2">
+				{customFooterHtml && <div set:html={customFooterHtml} />}
+			</div>
+			<div class="m-0.5">
+				&copy; <span id="copyright-year">{currentYear}</span>
+				{profileConfig.name}. All Rights Reserved. /
+				<a
+					class="transition link text-(--primary) font-medium"
+					target="_blank"
+					href={url("rss.xml")}>RSS</a
+				> /
+				<a
+					class="transition link text-(--primary) font-medium"
+					target="_blank"
+					href={url("sitemap-index.xml")}>Sitemap</a
+				>
+			</div>
+			<div class="m-0.5">
+				Powered by
+				<a
+					class="transition link text-(--primary) font-medium"
+					target="_blank"
+					href="https://astro.build">Astro</a
+				> &
+				<a
+					class="transition link text-(--primary) font-medium"
+					target="_blank"
+					href="https://github.com/CuteLeaf/Firefly">Firefly</a
+				>
+			</div>
+
+		</div>
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 z-10">
+            <div class="relative flex items-center gap-4"> {/* Added gap for spacing */}
+                {/* Existing Site Statistics Dropdown */}
+                <div class="relative"> {/* Wrap stats button and panel in its own relative container */}
+                    <button
+                        id="stats-dropdown-button"
+                        class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90 flex items-center justify-center cursor-pointer"
+                        aria-label="Site Statistics"
+                    >
+                        <Icon name="material-symbols:query-stats" class="text-[1.25rem]" />
+                    </button>
+                    <div
+                        id="stats-dropdown-panel"
+                        class="float-panel float-panel-closed absolute bottom-full right-0 mb-2 w-72 z-50"
+                    >
+                        <SiteStats />
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</footer>
+
+<style>
+  footer > div {
+    background: var(--card-bg);
+    border: 1px solid var(--line-divider);
+    border-bottom: none; /* Footer is at the bottom */
+    border-radius: 0.75rem 0.75rem 0 0;
+    transition: all var(--duration-medium) var(--ease-standard);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05); /* Shadow upwards */
+  }
+
+  :root.dark footer > div {
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<script is:inline>
+function setupFooterDropdown() {
+  const button = document.getElementById("stats-dropdown-button");
+  const menu = document.getElementById("stats-dropdown-panel");
+
+  if (!button || !menu) return;
+
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    const isCurrentlyClosed = menu.classList.contains("float-panel-closed");
+
+    if (isCurrentlyClosed) {
+      menu.classList.remove("float-panel-closed");
+      button.setAttribute("aria-expanded", "true");
+    } else {
+      menu.classList.add("float-panel-closed");
+      button.setAttribute("aria-expanded", "false");
+    }
+  };
+
+  const closeDropdown = (e) => {
+    if (!menu.classList.contains("float-panel-closed") && !menu.contains(e.target) && !button.contains(e.target)) {
+      menu.classList.add("float-panel-closed");
+      button.setAttribute("aria-expanded", "false");
+    }
+  };
+
+  button.onclick = toggleDropdown;
+  document.addEventListener("click", closeDropdown);
+}
+
+setupFooterDropdown();
+document.addEventListener("astro:after-swap", setupFooterDropdown);
+</script>

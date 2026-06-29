@@ -1,0 +1,69 @@
+---
+title: Ejemplo de artículo en formato MDX
+published: 1970-01-02
+category: Ejemplo de artículo
+description: Este es un ejemplo de artículo en formato MDX, que muestra cómo usar JSX en Markdown.
+tags:
+  - MDX
+draft: true
+---
+
+import { Icon } from 'astro-icon/components'
+
+:::tip
+[Firefly](https://github.com/CuteLeaf/Firefly) admite tanto artículos `MDX` como `Markdown`. Puedes mezclar ambos formatos en tus artículos. Si no tienes necesidades o contenidos especialmente complejos, se recomienda usar simplemente el formato Markdown.
+:::
+
+## Diferencia entre Markdown y MDX
+- Markdown (MD) es un lenguaje de marcado ligero que permite a los usuarios escribir documentos en un formato de texto plano y luego convertirlos a HTML formateado. Es muy popular por su sintaxis simple y fácil de usar, siendo especialmente adecuado para escribir documentación y artículos de blog.
+- MDX es un formato que extiende la sintaxis de Markdown, permitiendo insertar código JSX de manera fluida dentro de documentos Markdown. Con MDX, los usuarios pueden incrustar componentes React en sus documentos, logrando así una mayor interactividad y dinamismo.
+
+| Característica | Markdown | MDX |
+| :--- | :--- | :--- |
+| Sintaxis básica | Soportada (CommonMark) | Soportada (CommonMark) |
+| Etiquetas HTML | Soportadas | Soportadas (como JSX) |
+| Importación de componentes | No soportada | Soportada (import) |
+| Datos dinámicos | No soportada | Soportada (expresiones JS) |
+| Personalización de estilos | Limitada (class/style) | Flexible (className/CSS-in-JS) |
+
+## Uso de componentes
+
+Este es un componente de icono:
+```
+import { Icon } from 'astro-icon/components'
+
+<div class="flex items-center gap-2 my-4">
+  <Icon name="fa7-solid:rocket" class="text-4xl text-red-500" />
+  <span>¡Lanzamiento de cohete!</span>
+</div>
+```
+<div class="flex items-center gap-2 my-4">
+  <Icon name="fa7-solid:rocket" class="text-4xl text-red-500" />
+  <span>¡Lanzamiento de cohete!</span>
+</div>
+
+
+## Uso de JSX
+
+También puedes escribir HTML/JSX directamente:
+```
+<div className="p-4 bg-blue-100 dark:bg-blue-900 rounded-lg my-4">
+  Este es un bloque div con estilo personalizado, utilizando clases de Tailwind CSS.
+</div>
+```
+<div className="p-4 bg-blue-100 dark:bg-blue-900 rounded-lg my-4">
+  Este es un bloque div con estilo personalizado, utilizando clases de Tailwind CSS.
+</div>
+
+## Exportación simple de variables
+```
+export const year = new Date().getFullYear()
+
+Este año es {year}.
+```
+export const year = new Date().getFullYear()
+
+Este año es {year}.
+
+
+Para más información, consulta la [documentación de MDX](https://mdxjs.com/)

@@ -1,0 +1,117 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { PALETTE_SEED, HARMONY, derivePalette, deriveUIColors } from '../config/palette';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+
+const { primary, secondary, tertiary, neutral } = derivePalette(PALETTE_SEED, HARMONY);
+const light = deriveUIColors(PALETTE_SEED, false);
+const dark = deriveUIColors(PALETTE_SEED, true);
+
+const paletteVars = `--primary:${primary};--secondary:${secondary};--tertiary:${tertiary};--neutral:${neutral}`;
+const uiCSS = `
+:root {
+	--bg: ${light.bg};
+	--card-bg: ${light.cardBg};
+	--text-main: ${light.textMain};
+	--text-muted: ${light.textMuted};
+	--dark-bg: ${dark.bg};
+	--dark-card-bg: ${dark.cardBg};
+	--border: color-mix(in srgb, var(--text-main), transparent 85%);
+	--border-light: color-mix(in srgb, var(--text-main), transparent 92%);
+}
+.dark {
+	--bg: var(--dark-bg);
+	--card-bg: var(--dark-card-bg);
+	--text-main: #ffffff;
+	--text-muted: #a1a1aa;
+}
+`;
+---
+
+<!doctype html>
+<html lang="en" class="min-h-screen" data-theme="github-light" style={paletteVars}>
+	<head>
+		<BaseHead title={title} description={description} />
+		<style is:global set:html={uiCSS}></style>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+	</head>
+	<body class="flex min-h-screen flex-col">
+		<Header />
+		<main class="flex-1">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<script>
+	import Alpine from 'alpinejs';
+	window.Alpine = Alpine;
+	Alpine.start();
+
+	// Make tables in .prose sortable
+	document.addEventListener('click', (e) => {
+		const th = e.target.closest('.prose th');
+		if (!th) return;
+		const table = th.closest('table');
+		if (!table) return;
+		const tbody = table.querySelector('tbody');
+		if (!tbody) return;
+		const col = Array.from(th.parentElement.children).indexOf(th);
+		const dir = table.dataset.sortCol === String(col) && table.dataset.sortDir === 'asc' ? 'desc' : 'asc';
+		table.dataset.sortCol = col;
+		table.dataset.sortDir = dir;
+
+		const rows = Array.from(tbody.querySelectorAll('tr'));
+		rows.sort((a, b) => {
+			const va = a.children[col]?.textContent?.trim() || '';
+			const vb = b.children[col]?.textContent?.trim() || '';
+			const na = parseFloat(va), nb = parseFloat(vb);
+			if (!isNaN(na) && !isNaN(nb)) return dir === 'asc' ? na - nb : nb - na;
+			return dir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+		});
+		tbody.replaceChildren(...rows);
+
+		table.querySelectorAll('th').forEach((h, i) => {
+			h.classList.toggle('sort-asc', i === col && dir === 'asc');
+			h.classList.toggle('sort-desc', i === col && dir === 'desc');
+		});
+	});
+</script>
+
+<script is:inline>
+	// Pagefind search UI
+	if (document.querySelector('.pagefind-ui')) {
+		const s = document.createElement('script');
+		s.src = '/pagefind/pagefind-ui.js';
+		s.onload = () => new PagefindUI({ element: '.pagefind-ui' });
+		document.body.appendChild(s);
+	}
+
+	// Mermaid — solo carga si hay .mermaid en la página
+	if (document.querySelector('.mermaid')) {
+		const s = document.createElement('script');
+		s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+		s.onload = () => {
+			const isDark = document.documentElement.classList.contains('dark');
+			mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
+
+			// Cambiar tema al togglear dark mode
+			const obs = new MutationObserver(() => {
+				const dark = document.documentElement.classList.contains('dark');
+				mermaid.initialize({ theme: dark ? 'dark' : 'default' });
+			});
+			obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+		};
+		document.head.appendChild(s);
+	}
+</script>

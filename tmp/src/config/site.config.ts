@@ -1,0 +1,294 @@
+import type {
+  SiteConfig,
+  ProfileConfig,
+  NavBarConfig,
+  SidebarLayoutConfig,
+  BackgroundWallpaperConfig,
+  ExpressiveCodeConfig,
+  FontConfig,
+  LicenseConfig,
+  CoverImageConfig,
+  FooterConfig,
+  NavBarSearchConfig,
+  CommentConfig,
+} from "../types/config";
+import { LinkPreset, NavBarSearchMethod } from "../types/config";
+
+// --- Site Configuration ---
+export const siteConfig: SiteConfig = {
+  title: "Lluvia y Té",
+  subtitle: "Mi Blog",
+  site_url: "https://rainandtea.vercel.app/", // Update this to your URL
+  description: "Relájate y disfruta leyendo.",
+  keywords: ["Astro", "Blog", "Markdown"],
+  lang: "es",
+  themeColor: {
+    hue: 165,
+    fixed: false,
+    defaultMode: "dark",
+  },
+  card: {
+    border: true,
+  },
+  favicon: [
+    {
+      src: "/favicon/favicon.ico",
+    },
+  ],
+  navbar: {
+    logo: {
+      type: "icon",
+      value: "material-symbols:eco-outline",
+      alt: "🍀",
+    },
+    title: "Rain and Tea",
+    widthFull: false,
+    followTheme: false,
+  },
+  siteStartDate: "2025-01-01",
+  rehypeCallouts: {
+    theme: "obsidian",
+  },
+  showLastModified: true,
+  outdatedThreshold: 30,
+  sharePoster: true,
+  generateOgImages: true,
+  pages: {
+    sponsor: false,
+  },
+  postListLayout: {
+    defaultMode: "grid",
+    allowSwitch: true,
+    grid: {
+      masonry: false,
+      columns: 2,
+    },
+  },
+  pagination: {
+    postsPerPage: 10,
+  },
+  imageOptimization: {
+    formats: "webp",
+    quality: 85,
+  },
+  font: {
+    enable: true,
+    preload: true,
+    selected: ["system"],
+    fonts: {
+      system: {
+        id: "system",
+        name: "Fuente del sistema",
+        src: "",
+        family: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+      },
+    },
+    fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+  },
+};
+
+// --- Profile Configuration ---
+export const profileConfig: ProfileConfig = {
+  avatar: "assets/images/avatar.avif",
+  name: "Firefly",
+  bio: "Hello, I'm Firefly.",
+  links: [
+    {
+      name: "GitHub",
+      icon: "fa7-brands:github",
+      url: "https://github.com/CuteLeaf",
+      showName: false,
+    },
+    {
+      name: "RSS",
+      icon: "fa7-solid:rss",
+      url: "/rss/",
+      showName: false,
+    },
+  ],
+};
+
+// --- Navigation Bar Configuration ---
+export const navBarConfig: NavBarConfig = {
+  links: [
+    LinkPreset.Archive,
+    {
+      name: "Eventos",
+      url: "/events/",
+      icon: "material-symbols:article-outline",
+    },
+  ],
+};
+
+export const navBarSearchConfig: NavBarSearchConfig = {
+  method: NavBarSearchMethod.PageFind,
+};
+
+// --- Sidebar Configuration ---
+export const sidebarLayoutConfig: SidebarLayoutConfig = {
+  enable: true,
+  position: "left",
+  showRightSidebarOnPostPage: false,
+  leftComponents: [
+    {
+      type: "calendar",
+      enable: true,
+      position: "top",
+      showOnPostPage: true,
+    },
+    {
+      type: "sidebarToc",
+      enable: true,
+      position: "sticky",
+      showOnPostPage: true,
+      showOnNonPostPage: false,
+    },
+    {
+      type: "categories",
+      enable: true,
+      position: "sticky",
+      showOnPostPage: true,
+      responsive: {
+        collapseThreshold: 5,
+      },
+    },
+    {
+      type: "tags",
+      enable: true,
+      position: "sticky",
+      showOnPostPage: true,
+      responsive: {
+        collapseThreshold: 20,
+      },
+    },
+  ],
+  rightComponents: [],
+  mobileBottomComponents: [
+    {
+      type: "calendar",
+      enable: true,
+      showOnPostPage: true,
+    },
+    {
+      type: "categories",
+      enable: true,
+      showOnPostPage: true,
+      responsive: {
+        collapseThreshold: 5,
+      },
+    },
+    {
+      type: "sidebarToc",
+      enable: true,
+      showOnPostPage: true,
+      showOnNonPostPage: false,
+    },
+    {
+      type: "tags",
+      enable: true,
+      showOnPostPage: true,
+      responsive: {
+        collapseThreshold: 20,
+      },
+    },
+  ],
+};
+
+// --- Background/Wallpaper Configuration ---
+export const backgroundWallpaper: BackgroundWallpaperConfig = {
+  mode: "none",
+  switchable: false,
+  src: {
+    desktop: ["assets/images/DesktopWallpaper/d1.avif"],
+    mobile: ["assets/images/MobileWallpaper/m1.avif"],
+  },
+  banner: {
+    position: "0% 20%",
+    homeText: {
+      enable: true,
+      switchable: true,
+      title: "Lovely firefly!",
+      titleSize: "3.8rem",
+      subtitle: ["Exploring the digital world."],
+      subtitleSize: "1.5rem",
+      typewriter: {
+        enable: true,
+        speed: 100,
+        deleteSpeed: 50,
+        pauseTime: 2000,
+      },
+    },
+    credit: {
+      enable: false,
+      text: "",
+      url: "",
+    },
+    navbar: {
+      transparentMode: "semifull",
+      enableBlur: true,
+      blur: 3,
+    },
+    waves: {
+      enable: false,
+      switchable: false,
+    },
+  },
+  overlay: {
+    zIndex: -1,
+    opacity: 0.8,
+    blur: 1,
+  },
+};
+
+// --- Expressive Code Configuration ---
+export const expressiveCodeConfig: ExpressiveCodeConfig = {
+  darkTheme: "one-dark-pro",
+  lightTheme: "one-light",
+  pluginCollapsible: {
+    enable: true,
+    lineThreshold: 15,
+    previewLines: 8,
+    defaultCollapsed: true,
+  },
+};
+
+// --- License Configuration ---
+export const licenseConfig: LicenseConfig = {
+  enable: true,
+  name: "CC BY-NC-SA 4.0",
+  url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+};
+
+// --- Footer Configuration ---
+export const footerConfig: FooterConfig = {
+  enable: false, // Set to true if you want to use src/config/FooterConfig.html
+};
+
+// --- Cover Image Configuration ---
+export const coverImageConfig: CoverImageConfig = {
+  enableInPost: true,
+  randomCoverImage: {
+    enable: false,
+    apis: [],
+    fallback: "assets/images/cover.avif",
+    showLoading: false,
+  },
+};
+
+// --- Comment Configuration ---
+export const commentConfig: CommentConfig = {
+  type: "giscus",
+  giscus: {
+    repo: "tu-usuario/tu-repositorio", // REEMPLAZA CON TU REPO
+    repoId: "TU_REPO_ID", // REEMPLAZA ESTO
+    category: "General",
+    categoryId: "TU_CATEGORY_ID", // REEMPLAZA ESTO
+    mapping: "pathname",
+    strict: "0",
+    reactionsEnabled: "1",
+    emitMetadata: "0",
+    inputPosition: "top",
+    lang: "es",
+    loading: "lazy",
+  },
+};

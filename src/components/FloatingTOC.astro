@@ -1,0 +1,52 @@
+---
+interface Props {
+	class?: string;
+}
+---
+
+<div
+	x-data="{
+		headings: [],
+		active: '',
+		init() {
+			this.headings = Array.from(document.querySelectorAll('article h2, article h3'))
+				.map((h) => ({
+					id: h.id,
+					text: h.textContent || '',
+					level: h.tagName.toLowerCase(),
+				}));
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) this.active = entry.target.id;
+				});
+			}, { rootMargin: '-80px 0px -50% 0px' });
+			this.headings.forEach((h) => {
+				const el = document.getElementById(h.id);
+				if (el) observer.observe(el);
+			});
+		},
+	}"
+	x-show="headings.length > 0"
+	class="hidden xl:block {class}"
+>
+	<div class="sticky top-24">
+		<h3 class="mb-3 text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]">
+			On this page
+		</h3>
+		<nav class="space-y-1">
+			<template x-for="h in headings" :key="h.id">
+				<a
+					x-bind:href="`#${h.id}`"
+					x-text="h.text"
+					x-bind:class="{
+						'text-[var(--primary)] font-medium': active === h.id,
+						'text-[var(--text-muted)] hover:text-[var(--text-main)]': active !== h.id,
+						'pl-4 text-xs': h.level === 'h3',
+						'text-sm': h.level === 'h2',
+					}"
+					class="block truncate no-underline transition-colors"
+				></a>
+			</template>
+		</nav>
+	</div>
+</div>

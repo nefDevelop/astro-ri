@@ -1,0 +1,31 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    // Opciones del compilador
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "strictNullChecks": true,
+    "allowJs": false,
+    "declaration": true,
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ],
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@constants/*": ["src/constants/*"],
+      "@utils/*": ["src/utils/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@/*": ["src/*"]
+    }
+  },
+  "include": [".astro/types.d.ts", "src/**/*"], // Mantener esto como está, es estándar para Astro
+  "exclude": ["dist", "src/pages/guestbook.astro", "src/components/controls/DisplaySettings.svelte"] // Añadir el archivo eliminado aquí
+}

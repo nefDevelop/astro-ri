@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = await getCollection('blog');
+const categories = [...new Set(posts.flatMap((p) => p.data.categories))].sort();
+---
+
+<Layout title="Categories" description="All categories">
+	<section class="mx-auto max-w-3xl px-4 py-12">
+		<h1 class="mb-2 text-3xl font-bold">Categories</h1>
+		<p class="mb-8 text-[var(--text-muted)]">Browse posts by category.</p>
+
+		<div class="flex flex-wrap gap-3">
+			{
+				categories.map((cat) => {
+					const count = posts.filter((p) => p.data.categories.includes(cat)).length;
+					return (
+						<a
+							href={`/categories/${cat}/`}
+							class="inline-flex items-center gap-2 rounded-full bg-[var(--primary-90)] px-4 py-2 text-sm font-medium text-[var(--primary-10)] no-underline transition-colors hover:bg-[var(--primary-80)]"
+						>
+							{cat}
+							<span class="rounded-full bg-[var(--primary-80)] px-1.5 py-0.5 text-xs">{count}</span>
+						</a>
+					);
+				})
+			}
+		</div>
+	</section>
+</Layout>

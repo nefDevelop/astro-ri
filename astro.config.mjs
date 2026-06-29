@@ -12,6 +12,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import remarkMath from 'remark-math';
 import { defineConfig, fontProviders } from 'astro/config';
+import { rehypeFigure } from './src/plugins/rehype-figure.js';
 import { rehypeTableClasses } from './src/plugins/rehype-table-classes.js';
 import { remarkAttributes } from './src/plugins/remark-attributes.js';
 import { remarkMermaid } from './src/plugins/remark-mermaid';
@@ -47,6 +48,7 @@ export default defineConfig({
 		rehypePlugins: [
 			rehypeSlug,
 			rehypeAutolinkHeadings,
+			rehypeFigure,
 			rehypeTableClasses,
 			[rehypeKatex, { output: 'mathml' }],
 			[rehypeCallouts, {

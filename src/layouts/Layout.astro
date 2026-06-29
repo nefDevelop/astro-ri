@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -40,13 +41,15 @@ const uiCSS = `
 <!doctype html>
 <html lang="en" class="min-h-screen" data-theme="github-light" style={paletteVars}>
 	<head>
+		<ClientRouter fallback="animate" />
 		<BaseHead title={title} description={description} />
 		<style is:global set:html={uiCSS}></style>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css" />
 	</head>
 	<body class="flex min-h-screen flex-col">
 		<Header />
-		<main class="flex-1">
+		<main class="flex-1 pb-16 md:pb-0" transition:animate="slide">
 			<slot />
 		</main>
 		<Footer />
@@ -58,7 +61,10 @@ const uiCSS = `
 	window.Alpine = Alpine;
 	Alpine.start();
 
-	// Make tables in .prose sortable
+	// Reinitialize Alpine after View Transition navigations
+	document.addEventListener('astro:page-load', () => Alpine.initTree(document.body));
+
+	// Sortable tables (delegated, works across navigations)
 	document.addEventListener('click', (e) => {
 		const th = e.target.closest('.prose th');
 		if (!th) return;
@@ -88,7 +94,7 @@ const uiCSS = `
 	});
 </script>
 
-<script is:inline>
+<script is:inline data-astro-rerun>
 	// Pagefind search UI
 	if (document.querySelector('.pagefind-ui')) {
 		const s = document.createElement('script');
@@ -96,6 +102,35 @@ const uiCSS = `
 		s.onload = () => new PagefindUI({ element: '.pagefind-ui' });
 		document.body.appendChild(s);
 	}
+
+	// PhotoSwipe ligero — imágenes en .prose abren lightbox
+	(function() {
+		const imgs = document.querySelectorAll('.prose img');
+		if (imgs.length) {
+			const s = document.createElement('script');
+			s.src = 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/umd/photoswipe.umd.min.js';
+			s.onload = () => {
+				const { default: PhotoSwipe } = window.PhotoSwipe || {};
+				if (!PhotoSwipe) return;
+				const items = Array.from(imgs).map((img) => ({
+					element: img,
+					src: img.src,
+					msrc: img.src,
+					w: img.naturalWidth || 1200,
+					h: img.naturalHeight || 800,
+					alt: img.alt || '',
+				}));
+				imgs.forEach((img, i) => {
+					img.style.cursor = 'zoom-in';
+					img.addEventListener('click', () => {
+						const pswp = new PhotoSwipe({ dataSource: items, index: i });
+						pswp.init();
+					});
+				});
+			};
+			document.head.appendChild(s);
+		}
+	})();
 
 	// Mermaid — solo carga si hay .mermaid en la página
 	if (document.querySelector('.mermaid')) {

@@ -3,66 +3,89 @@
 > Tema para blog + documentación técnica.
 > Inspirado en [Firefly/Mdobs](tmp/) pero con stack más ligero.
 
-## Fase 1 — Base
+## ✅ Completado
 
+### Fase 1 — Base
 - [x] Scaffold con `create-astro --template blog` (Astro 7)
-- [x] Renombrar proyecto a `ri`
 - [x] Configuración inicial: `package.json`, `consts.ts`, `astro.config.mjs`
-- [x] Verificar que `npm run dev` funciona
+- [x] Paleta de colores generativa con seed color
+- [x] Layout principal (header, footer, navegación)
+- [x] Estilos globales con Tailwind CSS v4
+- [x] Tipografía Atkinson Hyperlegible
+- [x] Modo oscuro / claro con persistencia localStorage
+- [x] Página de inicio personalizada
 
-## Fase 2 — Personalización del tema base
+### Fase 2 — Contenido y colecciones
+- [x] Schema de blog: title, published, description, image, tags, categories, author, difficulty, draft, pinned, series, order, links
+- [x] Posts de ejemplo variados (md, mdx, código, imágenes, video, features)
+- [x] Colección docs con sidebar de navegación
+- [x] Sistema de tags (página de tags + filtrado por tag)
+- [x] Página de archive (listado cronológico por año)
 
-- [ ] Definir paleta de colores y variables CSS
-- [ ] Diseñar layout principal (header, footer, navegación)
-- [ ] Estilos globales (`src/styles/global.css`)
-- [ ] Configurar tipografía (sistema de fuentes)
-- [ ] Modo oscuro / claro
-- [ ] Página de inicio personalizada
+### Fase 3 — Features principales
+- [x] Code highlighting → astro-expressive-code (line numbers, collapsible sections, copy button)
+- [x] Búsqueda → Pagefind (búsqueda estática sin servidor)
+- [x] RSS feed → @astrojs/rss
+- [x] Sitemap → @astrojs/sitemap
+- [x] Paginación en listado de posts
+- [x] Open Graph / SEO → imágenes OG dinámicas con Satori
+- [x] Tabla de contenidos flotante en posts
+- [x] Transiciones de página → View Transitions (ClientRouter)
+- [x] KaTeX (fórmulas matemáticas)
+- [x] Mermaid (diagramas)
+- [x] Callouts / Admonitions (estilo Obsidian)
+- [x] Wikilinks estilo Obsidian ([[enlaces]], ==highlight==)
+- [x] Tablas ordenables
+- [x] Página 404 personalizada
+- [x] Página About
+- [x] Página Search
+- [x] Páginas de categorías: `/categories` y `/categories/[cat]`
+- [x] Páginas de autor: `/authors` y `/authors/[slug]`
+- [x] Lightbox para imágenes (PhotoSwipe)
+- [x] Footer con enlaces sociales configurables desde `consts.ts`
+- [x] Image handling: thumbnails en cards de home y blog
+- [x] Pinned posts: display prioritario con badge 📌
 
-## Fase 3 — Contenido y colecciones
+## 📋 Pendiente
 
-- [ ] Schema de blog con: título, descripción, fecha, tags, categoría, imagen
-- [ ] Posts de ejemplo variados (markdown, mdx, con código, imágenes)
-- [ ] Sistema de tags (página de tags, filtrado)
-- [ ] Colección `docs` para documentación técnica
-- [ ] Layout de documentación con sidebar de navegación
-- [ ] Página de archive (listado cronológico)
+### Páginas
+- [ ] Página de Pricing
+- [ ] Página de Contacto con formulario
+- [ ] Página FAQ
+- [ ] Página de Privacidad / Términos
+- [ ] Página Elements / Componentes
+- [ ] Página Careers / Ofertas
+- [ ] Página Case Studies
 
-## Fase 4 — Features principales
-
-- [ ] **Code highlighting** → `astro-expressive-code`
-  - Lenguaje badges, line numbers, collapsible sections
-- [ ] **Búsqueda** → Pagefind (búsqueda estática sin servidor)
-- [ ] **RSS feed** → `@astrojs/rss` (ya incluido)
-- [ ] **Sitemap** → `@astrojs/sitemap` (ya incluido)
-- [ ] **Paginación** en listado de posts
-- [ ] **Open Graph / SEO** → imágenes OG dinámicas
-- [ ] **Tabla de contenidos** flotante en posts
-- [ ] **Transiciones de página** → View Transitions (nativas de Astro)
-
-## Fase 5 — Widgets y extras
-
-- [ ] Widgets de sidebar: perfil, tags, categorías, stats
+### Features
 - [ ] Comentarios → Giscus (GitHub Discussions)
-- [ ] Imágenes: lightbox (PhotoSwipe o Fancybox)
-- [ ] Soporte para KaTeX (matemáticas)
-- [ ] Soporte para Mermaid (diagramas)
-- [ ] Páginas: about, 404
-- [ ] Footer con enlaces sociales
+- [ ] Sistema multi-autor con páginas de perfil
+- [ ] Widgets de sidebar: perfil, tags, stats
+- [ ] Sugerencia de posts similares
+- [ ] JSON-LD schema (BlogPosting, Article)
+- [ ] Google Analytics / GTM
+- [ ] Security headers (CSP, HSTS)
+- [ ] Config para Netlify / Vercel
+- [ ] Soporte multi-idioma (i18n)
+- [ ] MDX auto-import de componentes
+- [ ] PWA manifest
+- [ ] LLM-ready docs (llms.txt)
+- [ ] Knowledge graph / backlinks
+- [ ] Typst support
 
-## Fase 6 — Pulido y producción
-
-- [ ] Responsive design (mobile-first)
+### Pulido
 - [ ] Performance audit (Lighthouse)
 - [ ] SEO audit
-- [ ] Escribir `README.md` del tema
+- [ ] Escribir README.md del tema
 - [ ] Publicar como template de Astro
 
 ---
 
 ## Referencias
 
-- **Firefly theme** → `tmp/` — tema de referencia para ideas de implementación
+- **Firefly theme** → `tmp/` — tema de referencia
 - [Astro docs](https://docs.astro.build)
 - [Expressive Code](https://expressive-code.com)
 - [Pagefind](https://pagefind.app)
+- [PhotoSwipe](https://photoswipe.com)
+- [Giscus](https://giscus.app)

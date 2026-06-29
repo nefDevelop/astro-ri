@@ -5,9 +5,9 @@ import FormattedDate from '../components/FormattedDate.astro';
 
 const posts = (await getCollection('blog'))
 	.filter((p) => !p.data.draft)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	.sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
 
-const years = [...new Set(posts.map((p) => p.data.pubDate.getFullYear()))].sort((a, b) => b - a);
+const years = [...new Set(posts.map((p) => p.data.published.getFullYear()))].sort((a, b) => b - a);
 ---
 
 <Layout title="Archive" description="All posts">
@@ -22,11 +22,11 @@ const years = [...new Set(posts.map((p) => p.data.pubDate.getFullYear()))].sort(
 					<div class="space-y-4">
 						{
 							posts
-								.filter((p) => p.data.pubDate.getFullYear() === year)
+								.filter((p) => p.data.published.getFullYear() === year)
 								.map((post) => (
 									<div class="flex items-baseline gap-4">
 										<span class="shrink-0 text-sm tabular-nums text-[var(--text-muted)]">
-											<FormattedDate date={post.data.pubDate} />
+											<FormattedDate date={post.data.published} />
 										</span>
 										<a
 											href={`/blog/${post.id}/`}

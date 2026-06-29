@@ -1,0 +1,149 @@
+---
+title: 'Code Showcase — Multi-language Examples'
+published: 2026-06-28
+description: 'Demostración de bloques de código en múltiples lenguajes con expressive-code: line numbers, collapsible sections y language badges'
+tags: ['code', 'javascript', 'python', 'rust', 'go']
+categories: ['dev']
+author: ['ri']
+difficulty: 'intermediate'
+---
+
+import SortableTable from '../../components/SortableTable.astro';
+
+## JavaScript — Async/Await
+
+```js
+async function fetchUser(id) {
+  const res = await fetch(`/api/users/${id}`);
+  if (!res.ok) throw new Error('Failed to fetch');
+  return res.json();
+}
+
+// Uso
+fetchUser(42)
+  .then((user) => console.log(user.name))
+  .catch((err) => console.error(err));
+```
+
+## Python — Data Classes
+
+```python
+from dataclasses import dataclass
+from typing import Optional
+
+
+@dataclass
+class Post:
+    title: str
+    description: str
+    tags: list[str]
+    published: bool = True
+    reading_time: Optional[int] = None
+
+    def summary(self) -> str:
+        return f"{self.title} ({len(self.tags)} tags)"
+
+
+post = Post(title="Hello", description="World", tags=["astro"])
+print(post.summary())
+```
+
+## Rust — Pattern Matching
+
+```rust
+#[derive(Debug)]
+enum Status {
+    Active,
+    Inactive,
+    Banned { reason: String },
+}
+
+fn describe(status: &Status) -> &str {
+    match status {
+        Status::Active => "User is active",
+        Status::Inactive => "User is inactive",
+        Status::Banned { reason } if reason == "spam" => "Banned for spam",
+        Status::Banned { .. } => "Banned for other reasons",
+    }
+}
+```
+
+## Go — Concurrency
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		time.Sleep(time.Second)
+		results <- j * 2
+	}
+}
+
+func main() {
+	const numJobs = 5
+	jobs := make(chan int, numJobs)
+	results := make(chan int, numJobs)
+
+	for w := 1; w <= 3; w++ {
+		go worker(w, jobs, results)
+	}
+
+	for j := 1; j <= numJobs; j++ {
+		jobs <- j
+	}
+	close(jobs)
+}
+```
+
+## SQL — Window Functions
+
+```sql
+SELECT
+    department,
+    employee_name,
+    salary,
+    RANK() OVER (
+        PARTITION BY department
+        ORDER BY salary DESC
+    ) AS salary_rank,
+    AVG(salary) OVER (
+        PARTITION BY department
+    ) AS dept_avg
+FROM employees
+ORDER BY department, salary_rank;
+```
+
+## Terminal — Install & Build
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/user/ri.git
+cd ri
+
+# Instalar dependencias
+npm install
+
+# Iniciar dev server
+npm run dev
+
+# Build producción
+npm run build
+```
+
+## Tabla de referencia
+
+<SortableTable>
+  | Lenguaje | Paradigma | Tipado | Año |
+  |---|---|---|---|
+  | JavaScript | Multi-paradigma | Dinámico | 1995 |
+  | Python | Multi-paradigma | Dinámico | 1991 |
+  | Rust | Multi-paradigma | Estático | 2010 |
+  | Go | Estructurado | Estático | 2009 |
+  | SQL | Declarativo | — | 1974 |
+</SortableTable>

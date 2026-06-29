@@ -1,25 +1,29 @@
 ---
+import { SOCIAL_LINKS } from '../consts';
 import GitHub from './icons/GitHub.astro';
-import Twitter from './icons/Twitter.astro';
 import RSS from './icons/RSS.astro';
+import Twitter from './icons/Twitter.astro';
+
+const ICONS: Record<string, any> = { github: GitHub, rss: RSS, twitter: Twitter };
 
 const today = new Date();
 ---
 
-<footer class="border-t border-[var(--border-light)] bg-[var(--card-bg)]">
+<footer transition:name="footer" transition:persist class="border-t border-[var(--border-light)] bg-[var(--neutral-95)] pb-20 dark:bg-neutral-950 md:pb-0">
 	<div class="mx-auto max-w-5xl px-4 py-8">
 		<div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
 			<p class="text-sm text-[var(--text-muted)]">&copy; {today.getFullYear()} Ri. All rights reserved.</p>
 			<div class="flex gap-4">
-				<a href="https://github.com" target="_blank" class="text-[var(--text-muted)] hover:text-[var(--primary)]" aria-label="GitHub">
-					<GitHub size={20} />
-				</a>
-				<a href="https://twitter.com" target="_blank" class="text-[var(--text-muted)] hover:text-[var(--primary)]" aria-label="Twitter">
-					<Twitter size={20} />
-				</a>
-				<a href="/rss.xml" target="_blank" class="text-[var(--text-muted)] hover:text-[var(--primary)]" aria-label="RSS">
-					<RSS size={20} />
-				</a>
+				{
+					SOCIAL_LINKS.map((link) => {
+						const Icon = ICONS[link.icon];
+						return Icon ? (
+							<a href={link.url} target="_blank" class="text-[var(--text-muted)] hover:text-[var(--primary)]" aria-label={link.label}>
+								<Icon size={20} />
+							</a>
+						) : null;
+					})
+				}
 			</div>
 		</div>
 	</div>

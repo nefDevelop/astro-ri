@@ -50,7 +50,7 @@ export async function GET({ props }: APIContext<{ post: CollectionEntry<'blog'> 
 	const text = '#F0ECE5';
 	const muted = '#A09890';
 
-	const pubDate = post.data.pubDate.toLocaleDateString('en-US', {
+	const pubDate = post.data.published.toLocaleDateString('en-US', {
 		year: 'numeric', month: 'short', day: 'numeric',
 	});
 

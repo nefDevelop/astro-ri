@@ -52,9 +52,21 @@ const ogImage = ogSlug && !['', 'blog', 'tags', 'docs', 'search', 'archive', 'ab
 <meta property="twitter:image" content={ogImage} />
 
 <script is:inline>
-	const theme = localStorage.getItem('theme');
-	if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-		document.documentElement.classList.add('dark');
-		document.documentElement.dataset.theme = 'github-dark';
-	}
+	const applyTheme = () => {
+		const theme = localStorage.getItem('theme');
+		if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			document.documentElement.classList.add('dark');
+			document.documentElement.dataset.theme = 'github-dark';
+		} else {
+			document.documentElement.classList.remove('dark');
+			document.documentElement.dataset.theme = 'github-light';
+		}
+	};
+
+	// Ejecución inicial al cargar la página
+	applyTheme();
+
+	// Ejecución tras el swap de páginas en View Transitions
+	document.addEventListener('astro:after-swap', applyTheme);
 </script>
+

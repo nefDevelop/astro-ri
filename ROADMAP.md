@@ -45,6 +45,10 @@
 - [x] Footer con enlaces sociales configurables desde `consts.ts`
 - [x] Image handling: thumbnails en cards de home y blog
 - [x] Pinned posts: display prioritario con badge 📌
+- [x] Barra de progreso de lectura (Reading Progress Bar) con Alpine.js
+- [x] Botones de compartir en redes sociales y "Copiar enlace" con feedback visual
+- [x] Estilos de impresión optimizados (@media print) para guardar en PDF o papel
+- [x] Persistencia de tema y prevención de parpadeo (FOUC) en View Transitions (astro:after-swap)
 
 ## 📋 Pendiente
 

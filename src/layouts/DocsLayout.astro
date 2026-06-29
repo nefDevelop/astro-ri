@@ -1,5 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import ShareButtons from '../components/ShareButtons.astro';
 import Layout from './Layout.astro';
 
 interface Props {
@@ -13,6 +15,7 @@ const sections = [...new Set(entries.map((e) => e.data.section))];
 ---
 
 <Layout title={title} description={description}>
+	<ReadingProgress />
 	<div class="mx-auto flex max-w-6xl px-4 py-8">
 		<aside class="hidden w-56 shrink-0 md:block">
 		<nav class="sticky top-20 space-y-6">
@@ -47,6 +50,7 @@ const sections = [...new Set(entries.map((e) => e.data.section))];
 
 		<article class="min-w-0 flex-1 md:pl-10">
 			<slot />
+			<ShareButtons title={title} />
 		</article>
 	</div>
 </Layout>

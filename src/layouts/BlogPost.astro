@@ -67,12 +67,23 @@ const {
 						tags.length > 0 && (
 							<div class="mt-4 flex flex-wrap gap-2">
 								{tags.map((tag) => (
-									<a
-										href={`/tags/${tag}/`}
-										class="rounded-full bg-[var(--tertiary-90)] px-3 py-1 text-xs font-medium text-[var(--tertiary-10)] no-underline transition-colors hover:bg-[var(--tertiary-80)]"
-									>
-										#{tag}
-									</a>
+									<span class="rounded-full bg-[var(--tertiary-90)] px-3 py-1 text-xs font-medium text-[var(--tertiary-10)]">
+										#
+										{tag.split('/').map((part, index, arr) => {
+											const path = arr.slice(0, index + 1).join('/');
+											return (
+												<>
+													<a
+														href={`/tags/${path}/`}
+														class="no-underline hover:underline text-[var(--tertiary-10)]"
+													>
+														{part}
+													</a>
+													{index < arr.length - 1 && <span class="mx-0.5 text-[var(--tertiary-70)]">/</span>}
+												</>
+											);
+										})}
+									</span>
 								))}
 							</div>
 						)

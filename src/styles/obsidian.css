@@ -77,6 +77,23 @@
 	padding: 0;
 }
 
+/* Collapsible Callouts (Obsidian details/summary support) */
+details.callout summary.callout-title {
+	cursor: pointer;
+	list-style: none;
+	outline: none;
+	user-select: none;
+}
+details.callout summary.callout-title::-webkit-details-marker {
+	display: none;
+}
+.callout-fold {
+	transition: transform 0.2s ease;
+}
+details.callout[open] .callout-fold {
+	transform: rotate(90deg);
+}
+
 /* ─── CALLOUT METADATA ──────────────────────────── */
 
 /* Hide title */

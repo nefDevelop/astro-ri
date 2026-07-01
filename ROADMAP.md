@@ -53,8 +53,6 @@
 ## 📋 Pendiente
 
 ### Páginas
-- [ ] Página de Pricing
-- [ ] Página de Contacto con formulario
 - [ ] Página FAQ
 - [ ] Página de Privacidad / Términos
 - [ ] Página Elements / Componentes
@@ -74,8 +72,6 @@
 - [ ] MDX auto-import de componentes
 - [ ] PWA manifest
 - [ ] LLM-ready docs (llms.txt)
-- [ ] Knowledge graph / backlinks
-- [ ] Typst support
 
 ### Pulido
 - [ ] Performance audit (Lighthouse)

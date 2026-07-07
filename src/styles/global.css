@@ -1,6 +1,46 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 @import "rehype-callouts/theme/obsidian";
 @import "./obsidian.css";
+
+[x-cloak] { display: none !important; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; scroll-padding-top: 100px; }
+}
+
+/* Anchor link icon on heading hover */
+.prose .anchor {
+	text-decoration: none;
+	opacity: 0;
+	transition: opacity 0.15s;
+	margin-left: 0.25em;
+	font-size: 0.75em;
+	font-weight: 400;
+	color: var(--primary);
+}
+.prose *:hover > .anchor { opacity: 1; }
+
+:focus-visible {
+	outline: 2px solid var(--primary);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
 
 @theme {
 	--color-primary: var(--primary);

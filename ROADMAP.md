@@ -49,29 +49,24 @@
 - [x] Botones de compartir en redes sociales y "Copiar enlace" con feedback visual
 - [x] Estilos de impresión optimizados (@media print) para guardar en PDF o papel
 - [x] Persistencia de tema y prevención de parpadeo (FOUC) en View Transitions (astro:after-swap)
+- [x] Comentarios → Giscus (GitHub Discussions)
+- [x] Sistema multi-autor con colección YAML (avatar, bio, redes)
+- [x] Sugerencia de posts similares por tags/categorías
+- [x] JSON-LD schema (BlogPosting, Article)
+- [x] Series de posts (índice + navegación prev/next)
+- [x] Breadcrumbs con schema.org (docs)
+- [x] Paginación en tags, categorías y autores
+- [x] Componente PostCard unificado con tags y categorías navegables
+- [x] UX: skip-to-content, focus-visible, prefers-reduced-motion, aria-expanded, aria-current
 
 ## 📋 Pendiente
 
-### Páginas
-- [ ] Página FAQ
-- [ ] Página de Privacidad / Términos
-- [ ] Página Elements / Componentes
-- [ ] Página Careers / Ofertas
-- [ ] Página Case Studies
-
 ### Features
-- [ ] Comentarios → Giscus (GitHub Discussions)
-- [ ] Sistema multi-autor con páginas de perfil
-- [ ] Widgets de sidebar: perfil, tags, stats
-- [ ] Sugerencia de posts similares
-- [ ] JSON-LD schema (BlogPosting, Article)
 - [ ] Google Analytics / GTM
 - [ ] Security headers (CSP, HSTS)
 - [ ] Config para Netlify / Vercel
 - [ ] Soporte multi-idioma (i18n)
 - [ ] MDX auto-import de componentes
-- [ ] PWA manifest
-- [ ] LLM-ready docs (llms.txt)
 
 ### Pulido
 - [ ] Performance audit (Lighthouse)

@@ -1,0 +1,23 @@
+title: Ri
+description: Un tema de Astro para blog y documentación
+stack:
+  - Astro
+  - Tailwind CSS v4
+  - Alpine.js
+  - TypeScript
+  - Pagefind
+  - Expressive Code
+  - KaTeX
+  - Mermaid
+  - PhotoSwipe
+  - Satori
+  - MDX
+body: >
+  Ri es un tema para Astro diseñado para blogs y documentación técnica.
+  Construido con Tailwind CSS v4, Alpine.js y un sistema de paleta de colores
+  generativa que se adapta desde un solo color semilla.
+
+  Incluye resaltado de código con Expressive Code, búsqueda estática con
+  Pagefind, soporte para KaTeX y Mermaid, diagramas, callouts estilo Obsidian,
+  galería de imágenes con PhotoSwipe, y tablas ordenables. Todo sin necesidad
+  de frameworks UI pesados.

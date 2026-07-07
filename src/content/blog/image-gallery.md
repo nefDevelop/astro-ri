@@ -4,8 +4,10 @@ published: 2026-06-28
 description: 'Demostración de imágenes responsive en el tema Ri, con galerías, captions y alineación'
 tags: ['images', 'gallery', 'design']
 categories: ['design']
-author: ['ri']
+author: ['ri', 'colaborador']
 difficulty: 'beginner'
+series: 'ejemplo-avanzado'
+order: 1
 ---
 
 ## Imagen simple

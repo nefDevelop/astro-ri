@@ -6,6 +6,8 @@ tags: ['video', 'multimedia', 'embed']
 categories: ['media']
 author: ['ri']
 difficulty: 'beginner'
+series: 'ejemplo-avanzado'
+order: 2
 ---
 
 ## YouTube Embed

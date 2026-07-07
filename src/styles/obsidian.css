@@ -81,8 +81,10 @@
 details.callout summary.callout-title {
 	cursor: pointer;
 	list-style: none;
-	outline: none;
 	user-select: none;
+}
+details.callout summary.callout-title:focus:not(:focus-visible) {
+	outline: none;
 }
 details.callout summary.callout-title::-webkit-details-marker {
 	display: none;
@@ -331,7 +333,7 @@ details.callout[open] .callout-fold {
 
 /* ─── TAGS ───────────────────────────────────────── */
 .prose .tag,
-a[href*='/tags/'] {
+.prose a[href*='/tags/'] {
 	display: inline-block;
 	font-size: 0.75em;
 	font-weight: 700;
@@ -392,7 +394,7 @@ a[href*='/tags/']:hover {
 	border: 2px solid var(--border);
 	border-radius: 0.25em;
 	margin: 0;
-	cursor: default;
+	cursor: pointer;
 	accent-color: var(--primary);
 	flex-shrink: 0;
 	position: relative;

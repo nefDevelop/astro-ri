@@ -1,11 +1,20 @@
 ---
 title: 'Post de Prueba — Ri Theme'
 published: 2026-06-28
+updated: 2026-07-01
 description: 'Post completo con todos los elementos: tipografía, código, KaTeX, Mermaid, callouts, imágenes y más'
+image: '/assets/blog-placeholder-1.jpg'
 tags: ['test', 'markdown', 'code', 'math', 'mermaid']
 categories: ['dev']
 author: ['ri']
 difficulty: 'intermediate'
+draft: false
+pinned: false
+series: 'intro-astro'
+order: 3
+links:
+  website: 'https://example.com'
+  github: 'https://github.com'
 ---
 
 ## Tipografía

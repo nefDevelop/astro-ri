@@ -1,0 +1,8 @@
+title: Introducción a Astro
+description: Aprende las características principales del tema Ri para Astro, desde los fundamentos de Markdown hasta ejemplos de código avanzados.
+cover: /assets/blog-placeholder-1.jpg
+author: ['ri']
+chapters:
+  - markdown-features
+  - code-showcase
+  - test-post

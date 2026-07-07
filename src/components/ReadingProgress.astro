@@ -3,6 +3,7 @@
 ---
 <div
 	x-data="{ progress: 0 }"
+	x-init="if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) $el.style.display = 'none'"
 	@scroll.window="
 		const winScroll = window.pageYOffset || document.documentElement.scrollTop;
 		const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;

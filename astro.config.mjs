@@ -19,9 +19,11 @@ import { remarkMermaid } from './src/plugins/remark-mermaid';
 import { remarkObsidian } from './src/plugins/remark-obsidian';
 import { remarkReadingTime } from './src/plugins/remark-reading-time';
 
+import { SITE_URL } from './src/consts';
+
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://ri.pages.dev',
+	site: SITE_URL,
 	integrations: [
 		expressiveCode({
 			themes: ['github-dark', 'github-light'],
@@ -38,6 +40,7 @@ export default defineConfig({
 			},
 			frames: {
 				showCopyToClipboardButton: true,
+				showLanguage: true,
 			},
 		}),
 		mdx(),
@@ -47,7 +50,7 @@ export default defineConfig({
 		remarkPlugins: [remarkMath, remarkMermaid, remarkObsidian, remarkReadingTime, remarkAttributes],
 		rehypePlugins: [
 			rehypeSlug,
-			rehypeAutolinkHeadings,
+			[rehypeAutolinkHeadings, { behavior: 'append', content: { type: 'text', value: '#' }, properties: { class: 'anchor', ariaHidden: 'true', tabIndex: -1 } }],
 			rehypeFigure,
 			rehypeTableClasses,
 			[rehypeKatex, { output: 'mathml' }],

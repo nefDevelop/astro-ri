@@ -7,7 +7,7 @@ const sorted = docs.sort((a, b) => a.data.order - b.data.order);
 const first = sorted[0];
 ---
 
-<DocsLayout title="Docs" description="Documentation" entries={docs}>
+<DocsLayout title="Docs" description="Documentation" entries={docs} hideShare>
 	<h1 class="mb-4 text-3xl font-bold">Documentation</h1>
 	<p class="text-[var(--text-muted)]">Select a topic from the sidebar to get started.</p>
 

@@ -1,10 +1,13 @@
 ---
 title: 'Markdown Features — Guía Completa'
-published: 2026-06-29
-description: 'Todas las capacidades del pipeline markdown: callouts, tablas, fórmulas, wikilinks, diagramas y más'
+published: 2026-06-28
+description: 'Todas las características de Markdown compatibles: tipografía, listas, tablas, citas y elementos HTML embebidos'
 tags: ['markdown', 'features', 'guide']
 categories: ['guide']
 author: ['ri']
+pinned: true
+series: 'intro-astro'
+order: 1
 difficulty: 'beginner'
 ---
 

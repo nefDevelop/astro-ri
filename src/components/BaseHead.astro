@@ -66,7 +66,14 @@ const ogImage = ogSlug && !['', 'blog', 'tags', 'docs', 'search', 'archive', 'ab
 	// Ejecución inicial al cargar la página
 	applyTheme();
 
-	// Ejecución tras el swap de páginas en View Transitions
+	// Aplica el tema al nuevo documento ANTES del swap (evita flash en fade)
+	document.addEventListener('astro:before-swap', ({ newDocument }) => {
+		const theme = localStorage.getItem('theme');
+		if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			newDocument.documentElement.classList.add('dark');
+			newDocument.documentElement.dataset.theme = 'github-dark';
+		}
+	});
 	document.addEventListener('astro:after-swap', applyTheme);
 </script>
 

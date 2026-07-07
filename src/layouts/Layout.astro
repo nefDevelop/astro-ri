@@ -2,7 +2,9 @@
 import { ClientRouter } from 'astro:transitions';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import BackToTop from '../components/BackToTop.astro';
 import Footer from '../components/Footer.astro';
+import SearchModal from '../components/SearchModal.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { PALETTE_SEED, HARMONY, derivePalette, deriveUIColors } from '../config/palette';
 
@@ -48,11 +50,16 @@ const uiCSS = `
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css" />
 	</head>
 	<body class="flex min-h-screen flex-col">
+		<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[9999] focus:rounded focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-white focus:no-underline">
+			Skip to main content
+		</a>
 		<Header />
-		<main class="flex-1 pb-16 md:pb-0" transition:animate="slide">
+		<main id="main-content" class="flex-1 pb-16 md:pb-0" transition:animate="fade">
 			<slot />
 		</main>
+		<BackToTop />
 		<Footer />
+		<SearchModal />
 	</body>
 </html>
 
@@ -62,7 +69,40 @@ const uiCSS = `
 	Alpine.start();
 
 	// Reinitialize Alpine after View Transition navigations
-	document.addEventListener('astro:page-load', () => Alpine.initTree(document.body));
+	document.addEventListener('astro:page-load', () => {
+		Alpine.initTree(document.body);
+		enableCheckboxes();
+		updateNavActive();
+	});
+	enableCheckboxes();
+	updateNavActive();
+
+	function updateNavActive() {
+		document.querySelectorAll('[aria-label="Documentation sidebar"] a').forEach((a) => {
+			const isActive = a.pathname === window.location.pathname;
+			a.classList.toggle('bg-[var(--primary-90)]', isActive);
+			a.classList.toggle('text-[var(--primary)]', isActive);
+			a.classList.toggle('font-medium', isActive);
+			a.classList.toggle('text-[var(--text-muted)]', !isActive);
+			if (isActive) a.setAttribute('aria-current', 'page');
+			else a.removeAttribute('aria-current');
+		});
+	}
+
+	function enableCheckboxes() {
+		document.querySelectorAll('.task-list-item input[type="checkbox"]').forEach((cb) => {
+			cb.removeAttribute('disabled');
+		});
+	}
+
+	// Toggle task-list data-task on click
+	document.addEventListener('change', (e) => {
+		const cb = e.target.closest('.task-list-item input[type="checkbox"]');
+		if (!cb) return;
+		const li = cb.closest('.task-list-item');
+		if (!li) return;
+		li.dataset.task = cb.checked ? 'x' : ' ';
+	});
 
 	// Sortable tables (delegated, works across navigations)
 	document.addEventListener('click', (e) => {

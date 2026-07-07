@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const blog = defineCollection({
@@ -37,8 +37,42 @@ const docs = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			order: z.number().default(0),
 			section: z.string().default('general'),
+			tags: z.array(z.string()).default([]),
 			heroImage: z.optional(image()),
 		}),
 });
 
-export const collections = { blog, docs };
+const authors = defineCollection({
+	loader: glob({ base: './src/content/authors', pattern: '**/*.{yaml,yml,json}' }),
+	schema: z.object({
+		name: z.string(),
+		avatar: z.string().optional(),
+		bio: z.string().optional(),
+		website: z.string().optional(),
+		github: z.string().optional(),
+		twitter: z.string().optional(),
+	}),
+});
+
+const series = defineCollection({
+	loader: glob({ base: './src/content/series', pattern: '**/*.{yaml,yml,json}' }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		cover: z.string().optional(),
+		author: z.array(z.string()).default([]),
+		chapters: z.array(z.string()),
+	}),
+});
+
+const pages = defineCollection({
+	loader: glob({ base: './src/content/pages', pattern: '**/*.{yaml,yml,json}' }),
+	schema: z.object({
+		title: z.string().optional(),
+		description: z.string().optional(),
+		stack: z.array(z.string()).default([]),
+		body: z.string().optional(),
+	}),
+});
+
+export const collections = { blog, docs, authors, series, pages };

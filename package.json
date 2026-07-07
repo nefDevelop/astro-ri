@@ -7,9 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist && cp -rn dist/pagefind/pagefind-ui.* public/pagefind/ 2>/dev/null; true",
-    "preview": "astro preview",
-    "astro": "astro"
+"build": "astro build && pagefind --site dist && cp -rn dist/pagefind/pagefind-ui.* public/pagefind/ 2>/dev/null; true",
+		"preview": "astro preview",
+		"astro": "astro",
+		"check": "astro check",
+		"analyze": "npx vite-bundle-visualizer"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",

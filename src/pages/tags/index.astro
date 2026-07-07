@@ -34,10 +34,11 @@ const tags = [...new Set(allTags)].sort();
 					return (
 						<a
 							href={`/tags/${tag}/`}
-							class="inline-flex items-center gap-2 rounded-full bg-[var(--tertiary-90)] px-4 py-2 text-sm font-medium text-[var(--tertiary-10)] no-underline transition-colors hover:bg-[var(--tertiary-80)]"
+							class="flex items-center rounded border border-[var(--border-light)] bg-[var(--card-bg)] px-3 py-1.5 text-sm font-medium text-[var(--text-muted)] no-underline transition-colors hover:border-[var(--tertiary)] hover:text-[var(--tertiary)]"
 						>
+							<span class="mr-1 opacity-50">#</span>
 							{tag}
-							<span class="rounded-full bg-[var(--tertiary-80)] px-1.5 py-0.5 text-xs">{count}</span>
+							<span class="ml-2 rounded bg-[var(--border-light)] px-1.5 py-0.5 text-[10px] font-bold opacity-80">{count}</span>
 						</a>
 					);
 				})

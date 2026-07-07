@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content';
 import { paginate } from 'astro';
 import Layout from '../../layouts/Layout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 export async function getStaticPaths({ paginate: _paginate }: { paginate: typeof paginate }) {
@@ -30,6 +31,12 @@ type Props = {
 };
 
 const { page } = Astro.props;
+
+const posts = page.data.map((post: any) => {
+	const words = (post.body || '').split(/\s+/g).filter(Boolean).length;
+	const readingTime = `${Math.max(1, Math.ceil(words / 200))} min read`;
+	return { ...post, readingTime };
+});
 ---
 
 <Layout title={`Blog — Page ${page.currentPage} — ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
@@ -40,80 +47,24 @@ const { page } = Astro.props;
 		</div>
 		<p class="mb-8 text-[var(--text-muted)]">Thoughts, notes, and everything in between.</p>
 
-		<div class="grid gap-6 sm:grid-cols-2">
-			{
-				page.data.map((post: any) => (
-					<article class="group rounded-xl border border-[var(--border-light)] bg-[var(--card-bg)] transition-shadow hover:shadow-sm">
-						{post.data.image && (
-							<a href={`/blog/${post.id}/`} class="block no-underline">
-								<img src={post.data.image} alt="" class="h-40 w-full rounded-t-xl object-cover" loading="lazy" />
-							</a>
-						)}
-						<a href={`/blog/${post.id}/`} class="block p-5 no-underline">
-							<h2 class="text-lg font-semibold leading-snug text-[var(--text-main)] group-hover:text-[var(--primary)]">
-								{post.data.pinned && <span class="mr-1.5 text-[var(--primary)]">📌</span>}
-								{post.data.title}
-							</h2>
-							<p class="mt-2 line-clamp-2 text-sm text-[var(--text-muted)]">
-								{post.data.description}
-							</p>
-							<div class="mt-3 flex items-center gap-2 text-xs text-[var(--text-muted)]">
-								<FormattedDate date={post.data.published} />
-								<span>&middot;</span>
-								<span class="rounded-full bg-[var(--primary-90)] px-1.5 py-0.5 text-[10px] text-[var(--primary-10)]">
-									{post.data.categories[0]}
-								</span>
-							</div>
-							{
-								post.data.tags?.length > 0 && (
-									<div class="mt-2 flex flex-wrap gap-1.5">
-										{post.data.tags.slice(0, 3).map((tag: string) => (
-											<span class="rounded-full bg-[var(--tertiary-90)] px-2 py-0.5 text-[10px] text-[var(--tertiary-10)]">
-												#{tag}
-											</span>
-										))}
-									</div>
-								)
-							}
-						</a>
-					</article>
-				))
-			}
+		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{posts.map((post) => (
+				<PostCard
+					id={post.id}
+					title={post.data.title}
+					description={post.data.description}
+					published={post.data.published}
+					image={post.data.image}
+					tags={post.data.tags}
+					categories={post.data.categories}
+					author={post.data.author}
+					difficulty={post.data.difficulty}
+					pinned={post.data.pinned}
+					readingTime={post.readingTime}
+				/>
+			))}
 		</div>
 
-		{
-			page.lastPage > 1 && (
-				<nav class="mt-10 flex items-center justify-center gap-2">
-					{
-						page.url.prev && (
-							<a href={page.url.prev} class="rounded-lg border border-[var(--border-light)] px-4 py-2 text-sm text-[var(--text-muted)] no-underline hover:border-[var(--primary)] hover:text-[var(--primary)]">
-								&larr; Previous
-							</a>
-						)
-					}
-					{
-						Array.from({ length: page.lastPage }, (_, i) => (
-							<a
-								href={i === 0 ? '/blog/' : `/blog/${i + 1}/`}
-								class={`rounded-lg border px-3 py-2 text-sm no-underline ${
-									i + 1 === page.currentPage
-										? 'border-[var(--primary)] bg-[var(--primary)] text-white'
-										: 'border-[var(--border-light)] text-[var(--text-muted)] hover:border-[var(--primary)] hover:text-[var(--primary)]'
-								}`}
-							>
-								{i + 1}
-							</a>
-						))
-					}
-					{
-						page.url.next && (
-							<a href={page.url.next} class="rounded-lg border border-[var(--border-light)] px-4 py-2 text-sm text-[var(--text-muted)] no-underline hover:border-[var(--primary)] hover:text-[var(--primary)]">
-								Next &rarr;
-							</a>
-						)
-					}
-				</nav>
-			)
-		}
+		<Pagination currentPage={page.currentPage} lastPage={page.lastPage} baseUrl="/blog/" />
 	</section>
 </Layout>

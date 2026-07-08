@@ -20,8 +20,8 @@ const blog = defineCollection({
 		order: z.number().optional(),
 		links: z
 			.object({
-				website: z.string().optional(),
-				github: z.string().optional(),
+				website: z.string().url().optional(),
+				github: z.string().url().optional(),
 			})
 			.optional(),
 	}),
@@ -48,9 +48,9 @@ const authors = defineCollection({
 		name: z.string(),
 		avatar: z.string().optional(),
 		bio: z.string().optional(),
-		website: z.string().optional(),
-		github: z.string().optional(),
-		twitter: z.string().optional(),
+		website: z.string().url().optional(),
+		github: z.string().url().optional(),
+		twitter: z.string().url().optional(),
 	}),
 });
 

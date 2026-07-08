@@ -4,6 +4,10 @@ import HeaderLink from './HeaderLink.astro';
 import Sun from './icons/Sun.astro';
 import Moon from './icons/Moon.astro';
 import Menu from './icons/Menu.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <header
@@ -12,6 +16,11 @@ import Menu from './icons/Menu.astro';
 	transition:persist
 	class="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border-light)] bg-[var(--card-bg)]/80 backdrop-blur-sm supports-[backdrop-filter]:bg-[var(--card-bg)]/60 md:sticky md:top-0 md:border-t-0 md:border-b"
 >
+	<!-- Filo de refracción del cristal opaco -->
+	<div class="pointer-events-none absolute inset-x-0 top-0 h-[3px] md:top-auto md:bottom-0 backdrop-blur-[24px] backdrop-brightness-[1.15] dark:backdrop-brightness-[1.2] bg-white/[0.02] mix-blend-overlay"></div>
+
+
+
 	<div
 		id="mobile-menu"
 		x-show="mobileOpen"
@@ -25,7 +34,7 @@ import Menu from './icons/Menu.astro';
 		<div class="flex flex-col gap-2">
 			{
 				NAV_LINKS.map(({ label, url }) => (
-					<HeaderLink href={url} class="rounded-md px-3 py-2 text-sm font-medium no-underline" aria-current="page">{label}</HeaderLink>
+					<HeaderLink href={url} class="rounded-md px-3 py-2 text-sm font-medium no-underline" aria-current="page">{t(`nav.${label.toLowerCase()}` as any)}</HeaderLink>
 				))
 			}
 		</div>
@@ -39,7 +48,7 @@ import Menu from './icons/Menu.astro';
 		<div class="hidden items-center gap-6 md:flex">
 			{
 				NAV_LINKS.filter((_, i) => i < 3).map(({ label, url }) => (
-					<HeaderLink href={url} class="text-sm font-medium no-underline" aria-current="page">{label}</HeaderLink>
+					<HeaderLink href={url} class="text-sm font-medium no-underline" aria-current="page">{t(`nav.${label.toLowerCase()}` as any)}</HeaderLink>
 				))
 			}
 
@@ -50,7 +59,7 @@ import Menu from './icons/Menu.astro';
 						:aria-expanded="open"
 						class="flex items-center gap-1 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-main)] no-underline"
 					>
-						More
+						{t('action.more')}
 						<svg :class="open ? 'rotate-180' : ''" class="size-3 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
 					</button>
 					<div
@@ -62,7 +71,7 @@ import Menu from './icons/Menu.astro';
 					>
 						{
 							NAV_LINKS.slice(3).map(({ label, url }) => (
-								<HeaderLink href={url} class="block rounded-lg px-3 py-2 text-sm font-medium no-underline" aria-current="page">{label}</HeaderLink>
+								<HeaderLink href={url} class="block rounded-lg px-3 py-2 text-sm font-medium no-underline" aria-current="page">{t(`nav.${label.toLowerCase()}` as any)}</HeaderLink>
 							))
 						}
 					</div>
@@ -71,12 +80,11 @@ import Menu from './icons/Menu.astro';
 			
 			<button
 				@click="window.dispatchEvent(new CustomEvent('open-search'))"
-				class="group flex h-8 items-center gap-2 rounded-md border border-[var(--border-light)] bg-[var(--bg)] px-3 text-sm text-[var(--text-muted)] transition-colors hover:border-[var(--primary)] hover:text-[var(--text-main)]"
-				aria-label="Search"
+				class="group flex h-8 items-center gap-2 rounded-md border border-[var(--border-light)] bg-[var(--bg)] px-2.5 text-[var(--text-muted)] transition-colors hover:border-[var(--primary)] hover:text-[var(--text-main)]"
+				aria-label={t('action.search')}
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-colors group-hover:text-[var(--primary)]"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-				Search
-				<kbd class="ml-2 rounded border border-[var(--border-light)] bg-[var(--card-bg)] px-1.5 text-[10px] font-sans font-medium">Ctrl+K</kbd>
+				<kbd class="rounded border border-[var(--border-light)] bg-[var(--card-bg)] px-1.5 text-[10px] font-sans font-medium text-[var(--text-muted)] transition-colors group-hover:border-[var(--primary-20)] group-hover:text-[var(--text-main)]">Ctrl+K</kbd>
 			</button>
 		</div>
 
@@ -84,7 +92,7 @@ import Menu from './icons/Menu.astro';
 			<button
 				@click="window.dispatchEvent(new CustomEvent('open-search'))"
 				class="flex size-8 cursor-pointer items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--border-light)] hover:text-[var(--primary)] md:hidden"
-				aria-label="Search"
+				aria-label={t('action.search')}
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
 			</button>

@@ -7,6 +7,10 @@ import Twitter from './icons/Twitter.astro';
 const ICONS: Record<string, any> = { github: GitHub, rss: RSS, twitter: Twitter };
 
 const today = new Date();
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <footer transition:name="footer" transition:persist class="mt-auto border-t border-[var(--border-light)] bg-[var(--bg)] pb-16 pt-6 dark:bg-neutral-950 md:pb-6 md:pt-8">
@@ -30,7 +34,7 @@ const today = new Date();
 				) : null;
 			})}
 			<span class="text-sm text-[var(--text-muted)]">
-				Hecho con <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--text-main)] transition-colors hover:text-[var(--primary)] no-underline">Astro</a>
+				{t('footer.built')} <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--text-main)] transition-colors hover:text-[var(--primary)] no-underline">Astro</a>
 			</span>
 		</div>
 	</div>

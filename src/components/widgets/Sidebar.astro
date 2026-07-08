@@ -17,7 +17,7 @@ const { widgets = [], authorSlug, seriesName, currentSlug } = Astro.props;
 ---
 
 <div class="space-y-6">
-	{widgets.includes('toc') && <WidgetToc />}
+	{widgets.includes('toc') && <div class="hidden lg:block"><WidgetToc /></div>}
 	{widgets.includes('tags') && <WidgetTags />}
 	{widgets.includes('doc-tags') && <WidgetDocsTags />}
 	{widgets.includes('author') && authorSlug && <WidgetAuthor authorSlug={authorSlug} />}

@@ -6,6 +6,8 @@ import BackToTop from '../components/BackToTop.astro';
 import Footer from '../components/Footer.astro';
 import SearchModal from '../components/SearchModal.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import 'katex/dist/katex.min.css';
+import 'photoswipe/dist/photoswipe.css';
 import { PALETTE_SEED, HARMONY, derivePalette, deriveUIColors } from '../config/palette';
 
 interface Props {
@@ -46,8 +48,6 @@ const uiCSS = `
 		<ClientRouter fallback="animate" />
 		<BaseHead title={title} description={description} />
 		<style is:global set:html={uiCSS}></style>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css" />
 	</head>
 	<body class="flex min-h-screen flex-col">
 		<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[9999] focus:rounded focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-white focus:no-underline">
@@ -57,7 +57,15 @@ const uiCSS = `
 		<main id="main-content" class="flex-1 pb-16 md:pb-0" transition:animate="fade">
 			<slot />
 		</main>
-		<BackToTop />
+
+		<!-- FAB Region -->
+		<div class="pointer-events-none fixed bottom-24 right-4 z-[60] flex flex-col items-center justify-end gap-3 md:bottom-8 md:right-8">
+			<div class="pointer-events-auto flex flex-col items-center gap-3">
+				<slot name="fab" />
+				<BackToTop />
+			</div>
+		</div>
+
 		<Footer />
 		<SearchModal />
 	</body>
@@ -73,9 +81,11 @@ const uiCSS = `
 		Alpine.initTree(document.body);
 		enableCheckboxes();
 		updateNavActive();
+		initThirdParty();
 	});
 	enableCheckboxes();
 	updateNavActive();
+	initThirdParty();
 
 	function updateNavActive() {
 		document.querySelectorAll('[aria-label="Documentation sidebar"] a').forEach((a) => {
@@ -132,26 +142,23 @@ const uiCSS = `
 			h.classList.toggle('sort-desc', i === col && dir === 'desc');
 		});
 	});
-</script>
 
-<script is:inline data-astro-rerun>
-	// Pagefind search UI
-	if (document.querySelector('.pagefind-ui')) {
-		const s = document.createElement('script');
-		s.src = '/pagefind/pagefind-ui.js';
-		s.onload = () => new PagefindUI({ element: '.pagefind-ui' });
-		document.body.appendChild(s);
-	}
-
-	// PhotoSwipe ligero — imágenes en .prose abren lightbox
-	(function() {
-		const imgs = document.querySelectorAll('.prose img');
-		if (imgs.length) {
+	function initThirdParty() {
+		// Pagefind search UI
+		if (document.querySelector('.pagefind-ui') && !document.querySelector('.pagefind-ui form')) {
 			const s = document.createElement('script');
-			s.src = 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/umd/photoswipe.umd.min.js';
+			s.src = '/pagefind/pagefind-ui.js';
 			s.onload = () => {
-				const { default: PhotoSwipe } = window.PhotoSwipe || {};
-				if (!PhotoSwipe) return;
+				// @ts-ignore
+				new PagefindUI({ element: '.pagefind-ui' })
+			};
+			document.body.appendChild(s);
+		}
+
+		// PhotoSwipe
+		const imgs = document.querySelectorAll<HTMLImageElement>('.prose img');
+		if (imgs.length) {
+			import('photoswipe').then(({ default: PhotoSwipe }) => {
 				const items = Array.from(imgs).map((img) => ({
 					element: img,
 					src: img.src,
@@ -167,26 +174,25 @@ const uiCSS = `
 						pswp.init();
 					});
 				});
-			};
-			document.head.appendChild(s);
-		}
-	})();
-
-	// Mermaid — solo carga si hay .mermaid en la página
-	if (document.querySelector('.mermaid')) {
-		const s = document.createElement('script');
-		s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
-		s.onload = () => {
-			const isDark = document.documentElement.classList.contains('dark');
-			mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
-
-			// Cambiar tema al togglear dark mode
-			const obs = new MutationObserver(() => {
-				const dark = document.documentElement.classList.contains('dark');
-				mermaid.initialize({ theme: dark ? 'dark' : 'default' });
 			});
-			obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-		};
-		document.head.appendChild(s);
+		}
+
+		// Mermaid
+		if (document.querySelector('.mermaid')) {
+			import('mermaid').then((mermaidModule) => {
+				const mermaid = mermaidModule.default;
+				const isDark = document.documentElement.classList.contains('dark');
+				mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
+				
+				// Re-render specifically if needed, since astro:page-load might need manual trigger
+				mermaid.run({ querySelector: '.mermaid' });
+
+				const obs = new MutationObserver(() => {
+					const dark = document.documentElement.classList.contains('dark');
+					mermaid.initialize({ theme: dark ? 'dark' : 'default' });
+				});
+				obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+			});
+		}
 	}
 </script>

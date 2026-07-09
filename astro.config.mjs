@@ -1,5 +1,6 @@
 // @ts-check
 
+import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
@@ -11,6 +12,7 @@ import rehypeCallouts from 'rehype-callouts';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import remarkMath from 'remark-math';
+import { unified } from '@astrojs/markdown-remark';
 import { defineConfig, fontProviders } from 'astro/config';
 import { rehypeFigure } from './src/plugins/rehype-figure.js';
 import { rehypeTableClasses } from './src/plugins/rehype-table-classes.js';
@@ -24,6 +26,11 @@ import { SITE_URL } from './src/consts';
 // https://astro.build/config
 export default defineConfig({
 	site: SITE_URL,
+	output: 'static',
+	adapter: cloudflare({
+		imageService: 'passthrough',
+		prerenderEnvironment: 'node',
+	}),
 	integrations: [
 		expressiveCode({
 			themes: ['github-dark', 'github-light'],
@@ -47,23 +54,25 @@ export default defineConfig({
 		sitemap(),
 	],
 	markdown: {
-		remarkPlugins: [remarkMath, remarkMermaid, remarkObsidian, remarkReadingTime, remarkAttributes],
-		rehypePlugins: [
-			rehypeSlug,
-			[rehypeAutolinkHeadings, { behavior: 'append', content: { type: 'text', value: '#' }, properties: { class: 'anchor', ariaHidden: 'true', tabIndex: -1 } }],
-			rehypeFigure,
-			rehypeTableClasses,
-			[rehypeKatex, { output: 'mathml' }],
-			[rehypeCallouts, {
-				theme: 'obsidian',
-				callouts: {
-					defini: { title: 'Definición' },
-					pill: { title: 'Pill' },
-					infobox2: { title: 'Info' },
-					'multi-column': { title: 'Multi-column' },
-				},
-			}],
-		],
+		processor: unified({
+			remarkPlugins: [remarkMath, remarkMermaid, remarkObsidian, remarkReadingTime, remarkAttributes],
+			rehypePlugins: [
+				rehypeSlug,
+				[rehypeAutolinkHeadings, { behavior: 'append', content: { type: 'text', value: '#' }, properties: { class: 'anchor', ariaHidden: 'true', tabIndex: -1 } }],
+				rehypeFigure,
+				rehypeTableClasses,
+				[rehypeKatex, { output: 'mathml' }],
+				[rehypeCallouts, {
+					theme: 'obsidian',
+					callouts: {
+						defini: { title: 'Definición' },
+						pill: { title: 'Pill' },
+						infobox2: { title: 'Info' },
+						'multi-column': { title: 'Multi-column' },
+					},
+				}],
+			],
+		}),
 	},
 	vite: {
 		plugins: [tailwindcss()],

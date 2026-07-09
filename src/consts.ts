@@ -2,15 +2,24 @@ export const SITE_TITLE = 'Ri';
 export const SITE_DESCRIPTION = 'Un tema de Astro para blog y documentación';
 export const SITE_URL = 'https://ri.pages.dev';
 
-export const NAV_LINKS = [
-	{ label: 'Home', url: '/' },
-	{ label: 'Blog', url: '/blog' },
-	{ label: 'Docs', url: '/docs' },
-	{ label: 'Tags', url: '/tags' },
-	{ label: 'Categories', url: '/categories' },
-	{ label: 'Archive', url: '/archive' },
-	{ label: 'About', url: '/about' },
-] as const;
+export type PageKey = 'home' | 'blog' | 'docs' | 'tags' | 'categories' | 'archive' | 'about';
+
+export interface PageDef {
+	key: PageKey;
+	label: string;
+	url: string;
+	requires: 'blog' | 'docs' | 'about' | null;
+}
+
+export const ALL_PAGES: PageDef[] = [
+	{ key: 'home', label: 'Home', url: '/', requires: null },
+	{ key: 'blog', label: 'Blog', url: '/blog', requires: 'blog' },
+	{ key: 'docs', label: 'Docs', url: '/docs', requires: 'docs' },
+	{ key: 'tags', label: 'Tags', url: '/tags', requires: 'blog' },
+	{ key: 'categories', label: 'Categories', url: '/categories', requires: 'blog' },
+	{ key: 'archive', label: 'Archive', url: '/archive', requires: 'blog' },
+	{ key: 'about', label: 'About', url: '/about', requires: 'about' },
+];
 
 export const SOCIAL_LINKS: { label: string; url: string; icon: string }[] = [
 	{ label: 'GitHub', url: 'https://github.com', icon: 'github' },

@@ -1,5 +1,6 @@
 ---
-import { SITE_TITLE, NAV_LINKS } from '../consts';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE, ALL_PAGES } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 import Sun from './icons/Sun.astro';
 import Moon from './icons/Moon.astro';
@@ -8,6 +9,17 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const [blogPosts, docPages] = await Promise.all([
+	getCollection('blog'),
+	getCollection('docs'),
+]);
+const hasBlog = blogPosts.some((p) => !p.data.draft);
+const hasDocs = docPages.length > 0;
+const hasAbout = true; // about is a static page, always available
+
+const available: Record<string, boolean> = { blog: hasBlog, docs: hasDocs, about: hasAbout };
+const NAV_LINKS = ALL_PAGES.filter((p) => p.requires === null || available[p.requires]);
 ---
 
 <header

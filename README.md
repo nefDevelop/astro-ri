@@ -1,103 +1,227 @@
-# Astro Starter Kit: Blog
+# Ri — Blog + Documentación con Astro
 
-```sh
-npm create astro@latest -- --template blog
+Tema para blog personal y documentación técnica construido con **Astro 7**, **Tailwind CSS v4** y **Alpine.js**. Sin frameworks pesados del lado del cliente, con sistema de color generativo, búsqueda estática, comentarios vía GitHub y soporte para markdown extendido.
+
+## Stack
+
+| Capa | Tecnología |
+|------|-----------|
+| Framework | [Astro](https://astro.build) 7 — Islands architecture |
+| Estilos | [Tailwind CSS](https://tailwindcss.com) v4 + CSS custom properties |
+| Tipografía | Atkinson Hyperlegible (local, variable) |
+| Interactividad | [Alpine.js](https://alpinejs.dev) — liviano, sin bundle pesado |
+| Código | [Expressive Code](https://expressive-code.com) — resaltado con temas, números de línea, secciones plegables |
+| Búsqueda | [Pagefind](https://pagefind.app) — búsqueda estática indexada en build |
+| Comentarios | [Giscus](https://giscus.app) — GitHub Discussions |
+| Lightbox | [PhotoSwipe](https://photoswipe.com) |
+| Diagramas | [Mermaid](https://mermaid.js.org) |
+| Math | [KaTeX](https://katex.org) (MathML) |
+| OG Images | [Satori](https://github.com/vercel/satori) + Sharp — generación dinámica de Open Graph |
+| Testing | Vitest (unit) + Playwright (e2e) |
+| Package manager | npm |
+
+## Características
+
+### Contenido
+- Colecciones tipadas con Zod: blog, docs, autores, series, páginas
+- Markdown + MDX, con frontmatter validado
+- Posts con dificultad (beginner / intermediate / advanced)
+- Posts pinned (fijados al inicio)
+- Series de posts con navegación entre capítulos
+- Sistema multi-autor con perfiles YAML
+- Drafts (ocultos en producción)
+- Tags y categorías con páginas de listado y filtrado
+- Archivo cronológico por año
+- Imágenes OG dinámicas por post
+
+### Markdown extendido
+- **Callouts / Admonitions** estilo Obsidian (nota, warning, danger, info, defini, etc.)
+- **Wikilinks** (`[[slug]]` → enlace interno) y `==highlight==`
+- **Mermaid** en bloque ` ```mermaid `
+- **KaTeX** en línea y bloque (`$...$` / `$$...$$`)
+- **Tablas ordenables** con `{.sortable}`
+- **Figuras** automáticas con caption desde alt text
+- **Atributos CSS** mediante `{.classname}` en línea propia
+
+### UI / UX
+- Modo oscuro / claro con persistencia en localStorage
+- Paleta de colores generativa desde un color semilla (seed color)
+- Tabla de contenidos flotante con seguimiento visual (IntersectionObserver)
+- Barra de progreso de lectura
+- Búsqueda con atajo Ctrl+K
+- Paginación en listados (blog, tags, categorías, autores)
+- Navegación responsive con dropdown en móvil
+- Lightbox para imágenes
+- Botones de compartir (Reddit, Telegram, LinkedIn, Email, copiar enlace)
+- Skip-to-content, focus-visible, prefers-reduced-motion, aria-current
+- Transiciones de página suaves (View Transitions API)
+- Estilos de impresión optimizados
+
+### SEO / Meta
+- Open Graph / Twitter Cards
+- JSON-LD schema (BlogPosting, Article)
+- Sitemap automático
+- RSS feed
+- URLs limpias
+- Canonical URLs
+
+### Widgets (sidebar)
+- Tabla de contenidos
+- Autor (avatar, bio, enlaces)
+- Calendario interactivo con marcadores de posts
+- Categorías, Tags, Tags de documentación
+- Posts recientes, post destacado
+- Series (progreso de capítulos)
+- Estadísticas del sitio
+- Archivo mensual
+- Enlaces de apoyo (Buy me a coffee, GitHub Sponsor)
+
+## Estructura del proyecto
+
+```
+src/
+├── assets/              # Fuentes locales e imágenes
+├── components/          # Componentes Astro reutilizables
+│   ├── icons/           # Iconos SVG inline
+│   └── widgets/         # Componentes de sidebar
+├── config/              # Generador de paleta de colores
+├── consts.ts            # Configuración global del sitio
+├── content/             # Colecciones de contenido
+│   ├── authors/         # Perfiles de autor (YAML)
+│   ├── blog/            # Posts del blog (md/mdx)
+│   ├── docs/            # Páginas de documentación
+│   ├── pages/           # Páginas especiales (about)
+│   └── series/          # Definiciones de series (YAML)
+├── content.config.ts    # Schemas Zod para colecciones
+├── i18n/                # Traducciones (es/en)
+├── layouts/             # Layouts base, blog post, docs
+├── pages/               # Rutas y páginas
+│   ├── authors/         # Páginas de autores
+│   ├── blog/            # Listado y posts individuales
+│   ├── categories/      # Páginas de categorías
+│   ├── docs/            # Documentación
+│   ├── og/              # Generación de OG images
+│   ├── series/          # Páginas de series
+│   └── tags/            # Páginas de tags
+├── plugins/             # Plugins remark/rehype propios
+└── styles/              # CSS global y temas
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-Features:
+| Comando | Acción |
+|---------|--------|
+| `npm install` | Instalar dependencias |
+| `npm run dev` | Servidor de desarrollo en `localhost:4321` |
+| `npm run build` | Build de producción + indexación Pagefind |
+| `npm run preview` | Previsualizar build local |
+| `npm run check` | Type checking con `astro check` |
+| `npm run test` | Tests unitarios (Vitest) |
+| `npm run test:e2e` | Tests end-to-end (Playwright) |
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## Cómo empezar
 
-## 🚀 Project Structure
+### 1. Configuración global
 
-Inside of your Astro project, you'll see the following folders and files:
+Edita `src/consts.ts` para personalizar:
 
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```ts
+export const SITE_TITLE = 'Mi Blog';
+export const SITE_DESCRIPTION = 'Descripción de mi sitio';
+export const SITE_URL = 'https://midominio.com';
+
+export const NAV_LINKS = [
+  { label: 'Inicio', url: '/' },
+  { label: 'Blog', url: '/blog' },
+  // ...
+];
+
+export const SOCIAL_LINKS = [
+  { label: 'GitHub', url: 'https://github.com/tuusuario', icon: 'github' },
+  { label: 'RSS', url: '/rss.xml', icon: 'rss' },
+];
+
+export const GISCUS = {
+  repo: 'usuario/repo',
+  repoId: '',
+  category: 'General',
+  categoryId: '',
+};
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### 2. Paleta de colores
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+La paleta se genera automáticamente desde un color semilla. Ajústalo en `src/config/palette.js`:
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 📝 Guía de Uso (Usage Guide)
-
-### 1. Instalación
-Si quieres empezar un proyecto nuevo con este tema desde cero, ejecuta:
-```sh
-npm create astro@latest -- --template blog
-```
-Si ya clonaste o descargaste el repositorio, instala las dependencias y arranca el servidor local:
-```sh
-npm install
-npm run dev
+```js
+export const PALETTE_SEED = '#FF7800'; // Color principal
+export const HARMONY = 'tonal';        // tonal | complementary | analogous
 ```
 
-### 2. Configuración Principal
-Puedes modificar los metadatos globales del sitio (como el título y la descripción) en el archivo `src/consts.ts`.
+### 3. Escribir un post
 
-### 3. Escribir un Post
-Para publicar una nueva entrada de blog, simplemente crea un archivo Markdown (`.md`) o MDX (`.mdx`) en el directorio `src/content/blog/`. Asegúrate de incluir el *frontmatter* al principio del archivo:
+Crea un archivo `.md` o `.mdx` en `src/content/blog/`:
 
 ```markdown
 ---
-title: "Mi Nuevo Post"
-description: "Descripción de mi post"
-pubDate: "Jul 08 2026"
-heroImage: "/blog-placeholder-1.jpg"
+title: "Título del post"
+published: 2026-07-09
+description: "Breve descripción"
+tags: ["astro", "tutorial"]
+categories: ["dev"]
+author: ["tu-slug"]
+difficulty: beginner
+draft: false
+pinned: false
+series: "nombre-serie"
+order: 1
+image: "/ruta-a-imagen.jpg"
 ---
-Contenido de tu post aquí...
+
+Contenido del post...
 ```
 
-### 4. Manejo de Imágenes y Assets
-- **Imágenes estáticas**: Colócalas en la carpeta `public/` (ej. `public/blog-placeholder-1.jpg`) y referéncialas usando rutas absolutas en tu código o *frontmatter* (`/blog-placeholder-1.jpg`).
-- **Assets procesados**: Para optimizar imágenes automáticamente, guárdalas en `src/assets/` y utiliza el componente `<Image />` nativo de Astro dentro de tus archivos `.astro`.
+### 4. Crear una serie
 
-### 5. Feed RSS
-El tema viene con soporte nativo para RSS ubicado en `src/pages/rss.xml.js`. Este archivo extraerá automáticamente el contenido de la colección de tu blog y generará un feed funcional bajo la ruta `/rss.xml`.
+Define la serie en `src/content/series/`:
 
-### 6. Modificar el Diseño y Estilos
-- **Componentes**: Añade o edita los componentes globales en `src/components/`.
-- **Layouts**: La estructura general de las páginas se encuentra en `src/layouts/`.
-- **Páginas**: Edita las páginas estáticas o endpoints en `src/pages/`.
-## 👀 Want to learn more?
+```yaml
+# src/content/series/mi-serie.yaml
+title: "Mi Serie"
+description: "Descripción de la serie"
+author: ["tu-slug"]
+chapters:
+  - primer-post
+  - segundo-post
+  - tercer-post
+```
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### 5. Perfiles de autor
 
-## Credit
+Crea un archivo YAML en `src/content/authors/`:
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+```yaml
+name: "Tu Nombre"
+avatar: "/ruta/avatar.jpg"
+bio: "Breve biografía"
+website: "https://tusitio.com"
+github: "https://github.com/tuusuario"
+twitter: "https://twitter.com/tuusuario"
+```
+
+## Despliegue
+
+El proyecto genera una carpeta `dist/` con HTML estático. Funciona en cualquier plataforma:
+
+| Plataforma | Build command | Output dir |
+|------------|--------------|------------|
+| Cloudflare Pages | `npm run build` | `dist` |
+| Vercel | `npm run build` | `dist` |
+| Netlify | `npm run build` | `dist` |
+| GitHub Pages | `npm run build` | `dist` |
+
+Node.js >= 22.12.0 requerido.
+
+## Licencia
+
+MIT

@@ -11,6 +11,8 @@ order: 2
 ---
 
 import SortableTable from '../../components/SortableTable.astro';
+import DownloadItem from '../../components/DownloadItem.astro';
+import DownloadList from '../../components/DownloadList.astro';
 
 ## JavaScript — Async/Await
 
@@ -137,6 +139,24 @@ npm run dev
 # Build producción
 npm run build
 ```
+
+## Descargas
+
+<DownloadItem
+  label="Código completo (ZIP)"
+  url="https://raw.githubusercontent.com/nef734/astro-ri/main/src/content/blog/code-showcase.mdx"
+/>
+
+<DownloadList
+  title="📥 Archivos del tutorial"
+  files={[
+    { label: "ejemplo.js", url: "https://raw.githubusercontent.com/nef734/astro-ri/main/src/content/blog/code-showcase.mdx" },
+    { label: "ejemplo.py", url: "https://raw.githubusercontent.com/nef734/astro-ri/main/src/content/blog/code-showcase.mdx" },
+  ]}
+/>
+
+> [!tip] Descarga directa
+> <DownloadItem label="script.sh" url="https://raw.githubusercontent.com/nef734/astro-ri/main/src/content/blog/code-showcase.mdx" />
 
 ## Tabla de referencia
 

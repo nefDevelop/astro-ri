@@ -103,6 +103,48 @@ Click-to-sort on any `.prose` table header. Works with View Transitions.
 
 A delegated click handler on `th` elements sorts the `tbody` rows by column. Click again to toggle ascending/descending.
 
+## DownloadItem
+
+Card con botón de descarga para un archivo (raw de GitHub, etc.):
+
+```astro
+<DownloadItem
+  label="Button.astro"
+  url="https://raw.githubusercontent.com/user/repo/main/Button.astro"
+/>
+```
+
+Incluye el atributo `download` para forzar la descarga. Se puede usar dentro de callouts existentes:
+
+```md
+> [!tip] Descarga
+> <DownloadItem label="ejemplo.zip" url="https://..." />
+```
+
+### Props
+
+- `label` — nombre visible del archivo
+- `url` — enlace directo al archivo (raw)
+
+## DownloadList
+
+Agrupa varios `DownloadItem` en un contenedor tipo callout:
+
+```astro
+<DownloadList
+  title="📥 Archivos del tutorial"
+  files={[
+    { label: "Componente.astro", url: "https://..." },
+    { label: "estilos.css", url: "https://..." },
+  ]}
+/>
+```
+
+### Props
+
+- `files` — array de `{ label: string, url: string }`
+- `title` — título opcional del bloque
+
 ## FormattedDate
 
 Locale-formatted date display:

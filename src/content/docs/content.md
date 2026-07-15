@@ -24,6 +24,10 @@ draft: false
 pinned: false
 series: 'intro-astro'              # optional, slug from series collection
 order: 1                           # chapter order within series
+downloads:                         # optional, files for download
+  - id: button-astro
+    label: 'Componente Button.astro'
+    url: 'https://raw.githubusercontent.com/user/repo/main/Button.astro'
 ---
 ```
 
